@@ -1,0 +1,29 @@
+plugins {
+  id 'org.jetbrains.kotlin.jvm' version '1.1.4'
+  id 'java-gradle-plugin'
+}
+
+repositories {
+  jcenter()
+  mavenLocal()
+}
+
+dependencies {
+  compile 'org.jetbrains.kotlin:kotlin-stdlib:1.1.4'
+  compile 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
+  testCompile 'junit:junit:4.12'
+}
+
+gradlePlugin {
+  plugins {
+    vertxPlugin {
+      id = 'io.vertx.vertx-plugin'
+      implementationClass = 'io.vertx.gradle.VertxPlugin'
+    }
+  }
+}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '4.1'
+  distributionType = 'all'
+}
