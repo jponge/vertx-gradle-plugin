@@ -50,7 +50,7 @@ class VertxPluginTest {
       .build()
 
     run("java", "-jar", "src/test/gradle/simple-project/build/libs/simple-project-fat.jar") {
-      val (req, resp, res) = "http://localhost:18080/".httpGet().responseString()
+      val (_, _, res) = "http://localhost:18080/".httpGet().responseString()
       assertThat(res.get()).isEqualTo("Yo!")
     }
   }

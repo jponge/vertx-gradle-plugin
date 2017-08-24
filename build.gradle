@@ -1,7 +1,6 @@
 plugins {
-  id 'org.jetbrains.kotlin.jvm' version '1.1.4'
+  id 'org.jetbrains.kotlin.jvm' version '1.1.4-2'
   id 'java-gradle-plugin'
-  id 'maven-publish'
 }
 
 repositories {
@@ -9,12 +8,9 @@ repositories {
   mavenLocal()
 }
 
-group = 'io.vertx'
-version = '0.0.1-SNAPSHOT'
-
 dependencies {
-  compile 'org.jetbrains.kotlin:kotlin-stdlib:1.1.4'
-  compile 'org.jetbrains.kotlin:kotlin-stdlib-jre8:1.1.4'
+  compile 'org.jetbrains.kotlin:kotlin-stdlib:1.1.4-2'
+  compile 'org.jetbrains.kotlin:kotlin-stdlib-jre8:1.1.4-2'
   compile 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
   testCompile 'junit:junit:4.12'
   testCompile 'org.assertj:assertj-core:3.8.0'

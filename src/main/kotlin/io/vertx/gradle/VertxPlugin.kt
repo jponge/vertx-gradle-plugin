@@ -65,6 +65,27 @@ class VertxPlugin : Plugin<Project> {
 }
 
 open class VertxExtension {
+
   var launcher: String = "io.vertx.core.Launcher"
   var mainVerticle: String = ""
+
+  var runArgs = listOf("src/**/*")
+  var config: String = ""
+  var workDirectory: String = ""
+  var jvmArgs: String = ""
+
+  var redeploy: Boolean = true
+  var onRedeploy: String = ""
+  var redeployScanPeriod: Long = 1000
+  var redeployGracePeriod: Long = 1000
+  var redeployTerminationPeriod: Long = 1000
 }
+
+/*
+
+ = Notes
+
+ On redeploy, --launcher-class=(...) combined with `run io.vertx.core.Launcher` does auto-reload of customer
+ launcher classes.
+
+ */
