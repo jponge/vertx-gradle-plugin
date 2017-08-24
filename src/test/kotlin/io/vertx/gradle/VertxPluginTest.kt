@@ -27,7 +27,7 @@ class VertxPluginTest {
     GradleRunner.create()
       .withProjectDir(File("src/test/gradle/simple-project"))
       .withPluginClasspath()
-      .withArguments("build")
+      .withArguments("clean", "build")
       .build()
 
     val fatJarFile = File("src/test/gradle/simple-project/build/libs/simple-project-fat.jar")
