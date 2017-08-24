@@ -10,8 +10,8 @@ import java.io.File
 class VertxPluginTest {
 
   @Test
-  fun `build simple project`() {
-    val runner = GradleRunner.create()
+  fun `smoke test`() {
+    GradleRunner.create()
       .withProjectDir(File("src/test/gradle/simple-project"))
       .withPluginClasspath()
       .withArguments("tasks")
