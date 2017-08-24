@@ -10,8 +10,10 @@ repositories {
 
 dependencies {
   compile 'org.jetbrains.kotlin:kotlin-stdlib:1.1.4'
+  compile 'org.jetbrains.kotlin:kotlin-stdlib-jre8:1.1.4'
   compile 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
   testCompile 'junit:junit:4.12'
+  testCompile 'org.assertj:assertj-core:3.8.0'
 }
 
 gradlePlugin {
