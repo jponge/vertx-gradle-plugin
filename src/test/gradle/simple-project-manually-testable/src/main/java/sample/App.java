@@ -10,13 +10,13 @@ public class App extends AbstractVerticle {
 
     vertx
       .createHttpServer()
-      .requestHandler(req -> req.response().end("Yo!")).listen(18080);
+      .requestHandler(req -> req.response().end("Yo!")).listen(8080);
 
     vertx
       .createHttpServer()
       .requestHandler(req -> {
         req.response().end("Bye!");
-        vertx.close();
-      }).listen(18081);
+          vertx.close();
+      }).listen(8081);
   }
 }

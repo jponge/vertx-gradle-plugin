@@ -16,17 +16,25 @@ import org.gradle.api.plugins.JavaPluginConvention
 class VertxPlugin : Plugin<Project> {
 
   override fun apply(project: Project) {
-    applyOtherPlugins(project)
-    defineJavaSourceCompatibility(project)
     installVertxExtension(project)
-    configureShadowPlugin(project)
-    processVertxExtension(project)
+    applyOtherPlugins(project)
+    project.gradle.projectsEvaluated {
+      defineJavaSourceCompatibility(project)
+      defineMainClassName(project)
+      configureShadowPlugin(project)
+    }
   }
 
-  private fun processVertxExtension(project: Project) {
-    val vertxExtension = project.extensions.getByName("vertx") as VertxExtension
-    val applicationConvention = project.convention.getPlugin(ApplicationPluginConvention::class.java)
-    applicationConvention.mainClassName = vertxExtension.launcher
+  private fun installVertxExtension(project: Project) {
+    project.extensions.create("vertx", VertxExtension::class.java)
+  }
+
+  private fun Project.vertxExtension(): VertxExtension = this.extensions.getByName("vertx") as VertxExtension
+
+  private fun applyOtherPlugins(project: Project) {
+    project.pluginManager.apply(JavaPlugin::class.java)
+    project.pluginManager.apply(ApplicationPlugin::class.java)
+    project.pluginManager.apply(ShadowPlugin::class.java)
   }
 
   private fun defineJavaSourceCompatibility(project: Project) {
@@ -35,25 +43,28 @@ class VertxPlugin : Plugin<Project> {
     javaConvention.targetCompatibility = JavaVersion.VERSION_1_8
   }
 
-  private fun applyOtherPlugins(project: Project) {
-    project.pluginManager.apply(JavaPlugin::class.java)
-    project.pluginManager.apply(ApplicationPlugin::class.java)
-    project.pluginManager.apply(ShadowPlugin::class.java)
+  private fun defineMainClassName(project: Project) {
+    val vertxExtension = project.vertxExtension()
+    val applicationConvention = project.convention.getPlugin(ApplicationPluginConvention::class.java)
+    applicationConvention.mainClassName = vertxExtension.launcher
   }
 
   private fun configureShadowPlugin(project: Project) {
     val shadowJarTask = project.tasks.getByName("shadowJar") as ShadowJar
+    val vertxExtension = project.vertxExtension()
     shadowJarTask.apply {
       classifier = "fat"
       mergeServiceFiles { serviceFiles ->
         serviceFiles.include("META-INF/services/io.vertx.core.spi.VerticleFactory")
       }
+      manifest { manifest ->
+        manifest.attributes.put("Main-Verticle", vertxExtension.mainVerticle)
+      }
     }
-  }
-
-  private fun installVertxExtension(project: Project) {
-    project.extensions.create("vertx", VertxExtension::class.java)
   }
 }
 
-open class VertxExtension(var launcher: String = "io.vertx.core.Launcher", var mainVerticle: String = "")
+open class VertxExtension {
+  var launcher: String = "io.vertx.core.Launcher"
+  var mainVerticle: String = ""
+}

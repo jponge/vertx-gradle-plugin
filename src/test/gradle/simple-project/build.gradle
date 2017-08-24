@@ -11,5 +11,5 @@ dependencies {
 }
 
 vertx {
-
+  mainVerticle = 'sample.App'
 }
