@@ -25,18 +25,14 @@ class VertxPlugin : Plugin<Project> {
 
   private fun processVertxExtension(project: Project) {
     val vertxExtension = project.extensions.getByName("vertx") as VertxExtension
-    val applicationConvention = project.convention.getPlugin(ApplicationPlugin::class.java)
-    if (applicationConvention is ApplicationPluginConvention) {
-      applicationConvention.mainClassName = vertxExtension.launcher
-    }
+    val applicationConvention = project.convention.getPlugin(ApplicationPluginConvention::class.java)
+    applicationConvention.mainClassName = vertxExtension.launcher
   }
 
   private fun defineJavaSourceCompatibility(project: Project) {
-    val javaConvention = project.convention.getPlugin(JavaPlugin::class.java)
-    if (javaConvention is JavaPluginConvention) {
-      javaConvention.sourceCompatibility = JavaVersion.VERSION_1_8
-      javaConvention.targetCompatibility = JavaVersion.VERSION_1_8
-    }
+    val javaConvention = project.convention.getPlugin(JavaPluginConvention::class.java)
+    javaConvention.sourceCompatibility = JavaVersion.VERSION_1_8
+    javaConvention.targetCompatibility = JavaVersion.VERSION_1_8
   }
 
   private fun applyOtherPlugins(project: Project) {
