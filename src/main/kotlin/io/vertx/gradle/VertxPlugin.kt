@@ -2,6 +2,7 @@ package io.vertx.gradle
 
 import com.github.jengelman.gradle.plugins.shadow.ShadowPlugin
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import org.apache.tools.ant.taskdefs.condition.Os
 import org.gradle.api.*
 import org.gradle.api.plugins.ApplicationPlugin
 import org.gradle.api.plugins.ApplicationPluginConvention
@@ -117,11 +118,17 @@ open class VertxExtension(private val project: Project) {
   var jvmArgs = listOf<String>()
 
   var redeploy: Boolean = true
-  var watch = listOf("src/**/*")
-  var onRedeploy: String = "gradle classes" // FIXME
+  var watch = listOf("${project.projectDir.absolutePath}/src/**/*")
+  var onRedeploy: String = findGradleScript()
   var redeployScanPeriod: Long = 1000
   var redeployGracePeriod: Long = 1000
   var redeployTerminationPeriod: Long = 1000
+
+  private fun findGradleScript(): String {
+    val gradlewScript = if (Os.isFamily(Os.FAMILY_WINDOWS)) "gradlew.bat" else "gradlew"
+    val gradlewScriptFile = File(project.projectDir, gradlewScript)
+    return if (gradlewScriptFile.exists()) "${gradlewScriptFile.absolutePath} classes" else "gradle classes"
+  }
 }
 
 /*
