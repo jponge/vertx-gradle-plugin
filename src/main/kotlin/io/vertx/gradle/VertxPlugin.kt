@@ -44,11 +44,11 @@ class VertxPlugin : Plugin<Project> {
   override fun apply(project: Project) {
     installVertxExtension(project)
     applyOtherPlugins(project)
+    defineJavaSourceCompatibility(project)
     project.afterEvaluate {
       logger.debug("Vert.x plugin configuration: ${project.vertxExtension()}")
       configureDependencyRecommendationslugin(project)
       addVertxCoreDependency(project)
-      defineJavaSourceCompatibility(project)
       defineMainClassName(project)
       configureShadowPlugin(project)
       createVertxRunTask(project)
