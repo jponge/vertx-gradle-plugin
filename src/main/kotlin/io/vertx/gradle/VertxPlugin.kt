@@ -44,7 +44,7 @@ class VertxPlugin : Plugin<Project> {
   override fun apply(project: Project) {
     installVertxExtension(project)
     applyOtherPlugins(project)
-    project.gradle.projectsEvaluated {
+    project.afterEvaluate {
       logger.debug("Vert.x plugin configuration: ${project.vertxExtension()}")
       configureDependencyRecommendationslugin(project)
       addVertxCoreDependency(project)
