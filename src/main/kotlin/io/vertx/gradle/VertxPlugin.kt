@@ -10,6 +10,7 @@ import org.gradle.api.plugins.JavaPlugin
 import org.gradle.api.plugins.JavaPluginConvention
 import org.gradle.api.tasks.JavaExec
 import org.gradle.api.tasks.SourceSet
+import org.slf4j.LoggerFactory
 import java.io.File
 
 /**
@@ -17,10 +18,13 @@ import java.io.File
  */
 class VertxPlugin : Plugin<Project> {
 
+  private val logger = LoggerFactory.getLogger(VertxPlugin::class.java)
+
   override fun apply(project: Project) {
     installVertxExtension(project)
     applyOtherPlugins(project)
     project.gradle.projectsEvaluated {
+      logger.debug("Vert.x plugin configuration: ${project.vertxExtension()}")
       defineJavaSourceCompatibility(project)
       defineMainClassName(project)
       configureShadowPlugin(project)
@@ -30,26 +34,32 @@ class VertxPlugin : Plugin<Project> {
 
   private fun installVertxExtension(project: Project) {
     project.extensions.create("vertx", VertxExtension::class.java, project)
+    logger.debug("vertx extension created and added to the project")
   }
 
   private fun Project.vertxExtension(): VertxExtension = this.extensions.getByName("vertx") as VertxExtension
 
   private fun applyOtherPlugins(project: Project) {
+    logger.debug("Applying the plugins needed by the Vert.x plugin")
     project.pluginManager.apply(JavaPlugin::class.java)
     project.pluginManager.apply(ApplicationPlugin::class.java)
     project.pluginManager.apply(ShadowPlugin::class.java)
+    logger.debug("The plugins needed by the Vert.x plugin have been applied")
   }
 
   private fun defineJavaSourceCompatibility(project: Project) {
     val javaConvention = project.convention.getPlugin(JavaPluginConvention::class.java)
-    javaConvention.sourceCompatibility = JavaVersion.VERSION_1_8
-    javaConvention.targetCompatibility = JavaVersion.VERSION_1_8
+    val javaVersion = JavaVersion.VERSION_1_8
+    javaConvention.sourceCompatibility = javaVersion
+    javaConvention.targetCompatibility = javaVersion
+    logger.debug("The Vert.x plugin has set Java compatibility to $javaVersion")
   }
 
   private fun defineMainClassName(project: Project) {
     val vertxExtension = project.vertxExtension()
     val applicationConvention = project.convention.getPlugin(ApplicationPluginConvention::class.java)
     applicationConvention.mainClassName = vertxExtension.launcher
+    logger.debug("The main class has been set to ${vertxExtension.launcher}")
   }
 
   private fun configureShadowPlugin(project: Project) {
@@ -64,6 +74,7 @@ class VertxPlugin : Plugin<Project> {
         manifest.attributes.put("Main-Verticle", vertxExtension.mainVerticle)
       }
     }
+    logger.debug("The shadow plugin has been configured")
   }
 
   private fun createVertxRunTask(project: Project) {
@@ -104,6 +115,8 @@ class VertxPlugin : Plugin<Project> {
         args("--conf", vertxExtension.config)
       }
     }
+
+    logger.debug("The vertxRun task has been created")
   }
 }
 
@@ -114,7 +127,7 @@ open class VertxExtension(private val project: Project) {
 
   var args = listOf<String>()
   var config: String = ""
-  var workDirectory: String = ""
+  var workDirectory: String = project.projectDir.absolutePath
   var jvmArgs = listOf<String>()
 
   var redeploy: Boolean = true
@@ -128,6 +141,10 @@ open class VertxExtension(private val project: Project) {
     val gradlewScript = if (Os.isFamily(Os.FAMILY_WINDOWS)) "gradlew.bat" else "gradlew"
     val gradlewScriptFile = File(project.projectDir, gradlewScript)
     return if (gradlewScriptFile.exists()) "${gradlewScriptFile.absolutePath} classes" else "gradle classes"
+  }
+
+  override fun toString(): String {
+    return "VertxExtension(project=$project, launcher='$launcher', mainVerticle='$mainVerticle', args=$args, config='$config', workDirectory='$workDirectory', jvmArgs=$jvmArgs, redeploy=$redeploy, watch=$watch, onRedeploy='$onRedeploy', redeployScanPeriod=$redeployScanPeriod, redeployGracePeriod=$redeployGracePeriod, redeployTerminationPeriod=$redeployTerminationPeriod)"
   }
 }
 
