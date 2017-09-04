@@ -1,0 +1,23 @@
+buildscript {
+  repositories {
+    jcenter()
+  }
+  dependencies {
+    classpath 'io.vertx:vertx-gradle-plugin'
+  }
+}
+
+apply plugin: 'io.vertx.vertx-plugin'
+
+repositories {
+  jcenter()
+}
+
+dependencies {
+  compile "io.vertx:vertx-web"
+  compile "ch.qos.logback:logback-classic:1.2.3"
+}
+
+vertx {
+  launcher = "sample.App"
+}
