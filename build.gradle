@@ -16,6 +16,7 @@
 
 plugins {
   id 'java-gradle-plugin'
+  id 'com.gradle.plugin-publish' version '0.9.7'
   id 'org.jetbrains.kotlin.jvm' version '1.1.4-3'
   id 'com.github.ben-manes.versions' version '0.15.0'
 }
@@ -40,6 +41,20 @@ gradlePlugin {
     vertxPlugin {
       id = 'io.vertx.vertx-plugin'
       implementationClass = 'io.vertx.gradle.VertxPlugin'
+    }
+  }
+}
+
+pluginBundle {
+  website = 'https://github.com/jponge/vertx-gradle-plugin'
+  vcsUrl = 'https://github.com/jponge/vertx-gradle-plugin'
+  plugins {
+    vertxPlugin {
+      id = 'io.vertx.vertx-plugin'
+      displayName = 'Vert.x Gradle Plugin'
+      description = 'An opinionated Gradle plugin for Vert.x projects'
+      tags = ['vertx', 'vert.x', 'reactive', 'microservice']
+      version = "0.0.1"
     }
   }
 }
