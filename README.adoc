@@ -1,0 +1,120 @@
+= Vert.x Gradle Plugin
+
+An _opinionated_ Gradle plugin for Vert.x projects.
+
+== What the plugin does
+
+This plugin simplifies building and running Vert.x applications.
+
+It automatically applies the following plugin:
+
+* `java` (and sets the source compatibility to Java 8)
+* `application` + https://github.com/johnrengelman/shadow[`shadow`] to generate _fat Jars_ with all dependencies bundled
+* https://github.com/nebula-plugins/nebula-dependency-recommender-plugin[`nebula-dependency-recommender-plugin`] so that you can omit versions from elements in the https://github.com/vert-x3/vertx-dependencies[the Vert.x stack]
+
+The plugin automatically adds `io.vertx:vertx-core` as a `compile` dependency, so you don't need to do it.
+
+The plugin provides a `vertxRun` task that can take advantage of the Vert.x auto-reloading capabilities, so you can _just_ run it then have you code being automatically compiled and reloaded as you make changes.
+
+=== Minimal example
+
+[source,groovy]
+----
+plugins {
+  id 'io.vertx.vertx-plugin' version 'x.y.z' // <1>
+}
+
+repositories {
+  jcenter()
+}
+
+vertx {
+  mainVerticle = 'sample.App'
+}
+----
+<1> Replace `x.y.z` with a real version.
+
+Provided `sample.App` is a Vert.x verticle, then:
+
+* `gradle shadowJar` builds an executable Jar with all dependencies: `java -jar build/libs/simple-project-fat.jar`
+* `gradle vertxRun` starts the application and automatically recompiles (`gradle classes`) and reloads the code when any file under `src/` is being added, modified or deleted.
+
+=== A slightly more elaborated example
+
+A project using `vertx-web` and `logback` would use a `build.gradle` definition like the following one:
+
+[source,groovy]
+----
+plugins {
+  id 'io.vertx.vertx-plugin' version 'x.y.z'
+}
+
+repositories {
+  jcenter()
+}
+
+dependencies {
+  compile "io.vertx:vertx-web" // <1>
+  compile "ch.qos.logback:logback-classic:1.2.3" // <2>
+}
+
+vertx {
+  mainVerticle = "sample.App"
+  vertxVersion = "3.4.2" // <3>
+}
+----
+<1> Part of the Vert.x stack, so the version can be omitted.
+<2> Logback needs a version.
+<3> You can override to point to any specific release of Vert.x.
+
+== Configuration
+
+The configuration happens through the `vertx` Gradle extension.
+
+The following configuration can be applied, and matches the `vertx run` command-line interface when possible:
+
+* `vertxVersion`: the Vert.x version to use
+* `launcher`: the main class name
+* `mainVerticle`: the main verticle, when using `io.vertx.core.Launcher` as `launcher`
+* `args`: a list of command-line arguments to pass
+* `config`: either a file or direct JSON data to provide configuration
+* `workDirectory`: the working directory
+* `jvmArgs`: extra JVM arguments
+* `redeploy`: whether automatic redeployment shall happen or not
+* `watch`: Ant-style matchers for files to watch for modifications, comma-separated
+* `onRedeploy`: the script / application to run before redeploying
+* `redeployScanPeriod` / `redeployGracePeriod` / `redeployTerminationPeriod`: tuning for the redeployment watch timers.
+
+The default values are listed in include::src/main/kotlin/io/vertx/gradle/VertxExtension[].
+
+By default redeployment is enabled, running `gradle classes` to recompile, and watching all files under `src/`.
+
+== Licensing
+
+----
+Copyright 2017 Red Hat, Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+----
+
+The plugin was originally created by https://julien.ponge.org/[Julien Ponge].
+
+== Credits
+
+Thanks to the folks at Gradle for their guidance and technical discussions:
+
+* Cédric Champeau
+* Stefan Oheme
+* Rodrigo B. de Oliveira
+* Eric Wendelin
+* Benjamin Muschko
