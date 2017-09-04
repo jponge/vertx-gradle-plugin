@@ -28,7 +28,7 @@ class VertxPlugin : Plugin<Project> {
   }
 
   private fun installVertxExtension(project: Project) {
-    project.extensions.create("vertx", VertxExtension::class.java)
+    project.extensions.create("vertx", VertxExtension::class.java, project)
   }
 
   private fun Project.vertxExtension(): VertxExtension = this.extensions.getByName("vertx") as VertxExtension
@@ -106,7 +106,7 @@ class VertxPlugin : Plugin<Project> {
   }
 }
 
-open class VertxExtension {
+open class VertxExtension(private val project: Project) {
 
   var launcher: String = "io.vertx.core.Launcher"
   var mainVerticle: String = ""
