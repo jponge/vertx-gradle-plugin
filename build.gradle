@@ -12,6 +12,7 @@ dependencies {
   compile 'org.jetbrains.kotlin:kotlin-stdlib:1.1.4-3'
   compile 'org.jetbrains.kotlin:kotlin-stdlib-jre8:1.1.4-3'
   compile 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
+  compile 'com.netflix.nebula:nebula-dependency-recommender:4.3.0'
   testCompile 'junit:junit:4.12'
   testCompile 'org.assertj:assertj-core:3.8.0'
   testCompile 'com.github.kittinunf.fuel:fuel:1.9.0'

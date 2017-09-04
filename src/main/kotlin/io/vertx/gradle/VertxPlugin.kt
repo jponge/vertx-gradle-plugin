@@ -2,6 +2,8 @@ package io.vertx.gradle
 
 import com.github.jengelman.gradle.plugins.shadow.ShadowPlugin
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import netflix.nebula.dependency.recommender.DependencyRecommendationsPlugin
+import netflix.nebula.dependency.recommender.provider.RecommendationProviderContainer
 import org.apache.tools.ant.taskdefs.condition.Os
 import org.gradle.api.GradleException
 import org.gradle.api.JavaVersion
@@ -27,6 +29,7 @@ class VertxPlugin : Plugin<Project> {
     applyOtherPlugins(project)
     project.gradle.projectsEvaluated {
       logger.debug("Vert.x plugin configuration: ${project.vertxExtension()}")
+      configureDependencyRecommendationslugin(project)
       defineJavaSourceCompatibility(project)
       defineMainClassName(project)
       configureShadowPlugin(project)
@@ -46,7 +49,18 @@ class VertxPlugin : Plugin<Project> {
     project.pluginManager.apply(JavaPlugin::class.java)
     project.pluginManager.apply(ApplicationPlugin::class.java)
     project.pluginManager.apply(ShadowPlugin::class.java)
+    project.pluginManager.apply(DependencyRecommendationsPlugin::class.java)
     logger.debug("The plugins needed by the Vert.x plugin have been applied")
+  }
+
+  private fun configureDependencyRecommendationslugin(project: Project) {
+    val recommendations = project.extensions.getByName("dependencyRecommendations") as RecommendationProviderContainer
+    val vertxVersion = project.vertxExtension().vertxVersion
+    recommendations.apply {
+      mavenBom(mapOf("module" to "io.vertx:vertx-dependencies:$vertxVersion"))
+    }
+    project.extensions.extraProperties["stack.version"] = vertxVersion
+    logger.debug("Recommending Vert.x version $vertxVersion")
   }
 
   private fun defineJavaSourceCompatibility(project: Project) {
@@ -129,6 +143,8 @@ class VertxPlugin : Plugin<Project> {
 
 open class VertxExtension(private val project: Project) {
 
+  var vertxVersion = "3.4.2"
+
   var launcher: String = "io.vertx.core.Launcher"
   var mainVerticle: String = ""
 
@@ -151,6 +167,6 @@ open class VertxExtension(private val project: Project) {
   }
 
   override fun toString(): String {
-    return "VertxExtension(project=$project, launcher='$launcher', mainVerticle='$mainVerticle', args=$args, config='$config', workDirectory='$workDirectory', jvmArgs=$jvmArgs, redeploy=$redeploy, watch=$watch, onRedeploy='$onRedeploy', redeployScanPeriod=$redeployScanPeriod, redeployGracePeriod=$redeployGracePeriod, redeployTerminationPeriod=$redeployTerminationPeriod)"
+    return "VertxExtension(project=$project, vertxVersion='$vertxVersion', launcher='$launcher', mainVerticle='$mainVerticle', args=$args, config='$config', workDirectory='$workDirectory', jvmArgs=$jvmArgs, redeploy=$redeploy, watch=$watch, onRedeploy='$onRedeploy', redeployScanPeriod=$redeployScanPeriod, redeployGracePeriod=$redeployGracePeriod, redeployTerminationPeriod=$redeployTerminationPeriod)"
   }
 }
