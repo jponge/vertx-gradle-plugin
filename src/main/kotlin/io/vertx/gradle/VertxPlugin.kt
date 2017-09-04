@@ -45,13 +45,14 @@ class VertxPlugin : Plugin<Project> {
     installVertxExtension(project)
     applyOtherPlugins(project)
     defineJavaSourceCompatibility(project)
+    createVertxRunTask(project)
     project.afterEvaluate {
       logger.debug("Vert.x plugin configuration: ${project.vertxExtension()}")
       configureDependencyRecommendationslugin(project)
       addVertxCoreDependency(project)
       defineMainClassName(project)
       configureShadowPlugin(project)
-      createVertxRunTask(project)
+      configureVertxRunTask(project)
     }
   }
 
@@ -119,11 +120,16 @@ class VertxPlugin : Plugin<Project> {
   }
 
   private fun createVertxRunTask(project: Project) {
+    project.tasks.create("vertxRun", JavaExec::class.java)
+    logger.debug("The vertxRun task has been created")
+  }
+
+  private fun configureVertxRunTask(project: Project) {
     val vertxExtension = project.vertxExtension()
     val javaConvention = project.convention.getPlugin(JavaPluginConvention::class.java)
     val mainSourceSet = javaConvention.sourceSets.getByName("main")
 
-    project.tasks.create("vertxRun", JavaExec::class.java).apply {
+    (project.tasks.getByName("vertxRun") as JavaExec).apply {
       group = "Application"
       description = "Runs this project as a Vert.x application"
 
@@ -162,7 +168,7 @@ class VertxPlugin : Plugin<Project> {
       }
     }
 
-    logger.debug("The vertxRun task has been created")
+    logger.debug("The vertxRun task has been configured")
   }
 }
 
