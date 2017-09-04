@@ -73,17 +73,59 @@ The configuration happens through the `vertx` Gradle extension.
 
 The following configuration can be applied, and matches the `vertx run` command-line interface when possible:
 
-* `vertxVersion`: the Vert.x version to use
-* `launcher`: the main class name
-* `mainVerticle`: the main verticle, when using `io.vertx.core.Launcher` as `launcher`
-* `args`: a list of command-line arguments to pass
-* `config`: either a file or direct JSON data to provide configuration
-* `workDirectory`: the working directory
-* `jvmArgs`: extra JVM arguments
-* `redeploy`: whether automatic redeployment shall happen or not
-* `watch`: Ant-style matchers for files to watch for modifications, comma-separated
-* `onRedeploy`: the script / application to run before redeploying
-* `redeployScanPeriod` / `redeployGracePeriod` / `redeployTerminationPeriod`: tuning for the redeployment watch timers.
+[cols=3,options="header"]
+|===
+| Option
+| Description
+| Default value
+
+|`vertxVersion`
+|the Vert.x version to use
+|"3.4.2"
+
+
+|`launcher`
+|the main class name
+| `io.vertx.core.Launcher`
+
+|`mainVerticle`
+|the main verticle, when using `io.vertx.core.Launcher` as `launcher`
+| ""
+
+
+|`args`
+|a list of command-line arguments to pass
+|`[]`
+
+|`config`
+|either a file or direct JSON data to provide configuration
+|""
+
+|`workDirectory`
+|the working directory
+|`project.projectDir`
+
+|`jvmArgs`
+|extra JVM arguments
+|`[]`
+
+|`redeploy`
+|whether automatic redeployment shall happen or not
+|true
+
+|`watch`
+|Ant-style matchers for files to watch for modifications, comma-separated
+|`src/\**/*`
+
+|`onRedeploy`
+|the script / application to run before redeploying
+| One of `gradle`, `gradlew` or `gradlew.bat` depending on the environment
+
+|`redeployScanPeriod` / `redeployGracePeriod` / `redeployTerminationPeriod`
+|tuning for the redeployment watch timers
+|1 second each
+
+|===
 
 The default values are listed in `src/main/kotlin/io/vertx/gradle/VertxExtension.kt`.
 
