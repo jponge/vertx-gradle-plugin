@@ -3,13 +3,15 @@ package io.vertx.gradle
 import com.github.jengelman.gradle.plugins.shadow.ShadowPlugin
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.apache.tools.ant.taskdefs.condition.Os
-import org.gradle.api.*
+import org.gradle.api.GradleException
+import org.gradle.api.JavaVersion
+import org.gradle.api.Plugin
+import org.gradle.api.Project
 import org.gradle.api.plugins.ApplicationPlugin
 import org.gradle.api.plugins.ApplicationPluginConvention
 import org.gradle.api.plugins.JavaPlugin
 import org.gradle.api.plugins.JavaPluginConvention
 import org.gradle.api.tasks.JavaExec
-import org.gradle.api.tasks.SourceSet
 import org.slf4j.LoggerFactory
 import java.io.File
 
@@ -89,17 +91,20 @@ class VertxPlugin : Plugin<Project> {
       workingDir(File(vertxExtension.workDirectory))
       jvmArgs(vertxExtension.jvmArgs)
       classpath(mainSourceSet.runtimeClasspath)
-      main = vertxExtension.launcher
-
-      if (vertxExtension.launcher == "io.vertx.core.Launcher") {
-        if (vertxExtension.mainVerticle.isBlank()) {
-          throw GradleException("Extension property vertx.mainVerticle must be specified when using io.vertx.core.Launcher as a launcher")
-        }
-        args("run", vertxExtension.mainVerticle)
-      }
 
       if (vertxExtension.redeploy) {
-        args("--launcher-class", "io.vertx.core.Launcher") // FIXME
+        main = "io.vertx.core.Launcher"
+
+        if (vertxExtension.launcher == "io.vertx.core.Launcher") {
+          if (vertxExtension.mainVerticle.isBlank()) {
+            throw GradleException("Extension property vertx.mainVerticle must be specified when using io.vertx.core.Launcher as a launcher")
+          }
+          args("run", vertxExtension.mainVerticle)
+        } else {
+          args("run")
+        }
+
+        args("--launcher-class", vertxExtension.launcher)
         args("--redeploy")
         vertxExtension.watch.forEach { args(it) }
         args("--redeploy-grace-period", vertxExtension.redeployGracePeriod)
@@ -108,6 +113,8 @@ class VertxPlugin : Plugin<Project> {
         if (vertxExtension.onRedeploy.isNotBlank()) {
           args("--on-redeploy", vertxExtension.onRedeploy)
         }
+      } else {
+        main = vertxExtension.launcher
       }
 
       vertxExtension.args.forEach { args(it) }
@@ -147,14 +154,3 @@ open class VertxExtension(private val project: Project) {
     return "VertxExtension(project=$project, launcher='$launcher', mainVerticle='$mainVerticle', args=$args, config='$config', workDirectory='$workDirectory', jvmArgs=$jvmArgs, redeploy=$redeploy, watch=$watch, onRedeploy='$onRedeploy', redeployScanPeriod=$redeployScanPeriod, redeployGracePeriod=$redeployGracePeriod, redeployTerminationPeriod=$redeployTerminationPeriod)"
   }
 }
-
-/*
-
- = Notes
-
- Does not play well with daemons
-
- On redeploy, --launcher-class=(...) combined with `run io.vertx.core.Launcher` does auto-reload of customer
- launcher classes.
-
- */
