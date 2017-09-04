@@ -26,6 +26,9 @@ repositories {
   mavenLocal()
 }
 
+version = '0.0.1'
+group = 'io.vertx'
+
 dependencies {
   compile 'org.jetbrains.kotlin:kotlin-stdlib:1.1.4-3'
   compile 'org.jetbrains.kotlin:kotlin-stdlib-jre8:1.1.4-3'
@@ -54,7 +57,6 @@ pluginBundle {
       displayName = 'Vert.x Gradle Plugin'
       description = 'An opinionated Gradle plugin for Vert.x projects'
       tags = ['vertx', 'vert.x', 'reactive', 'microservice']
-      version = "0.0.1"
     }
   }
 }
