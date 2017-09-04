@@ -6,10 +6,6 @@ repositories {
   jcenter()
 }
 
-dependencies {
-  compile 'io.vertx:vertx-core'
-}
-
 vertx {
   mainVerticle = 'sample.App'
 }

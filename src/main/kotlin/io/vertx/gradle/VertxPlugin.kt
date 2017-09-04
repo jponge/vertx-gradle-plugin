@@ -47,6 +47,7 @@ class VertxPlugin : Plugin<Project> {
     project.gradle.projectsEvaluated {
       logger.debug("Vert.x plugin configuration: ${project.vertxExtension()}")
       configureDependencyRecommendationslugin(project)
+      addVertxCoreDependency(project)
       defineJavaSourceCompatibility(project)
       defineMainClassName(project)
       configureShadowPlugin(project)
@@ -78,6 +79,13 @@ class VertxPlugin : Plugin<Project> {
     }
     project.extensions.extraProperties["stack.version"] = vertxVersion
     logger.debug("Recommending Vert.x version $vertxVersion")
+  }
+
+  private fun addVertxCoreDependency(project: Project) {
+    project.dependencies.apply {
+      add("compile", "io.vertx:vertx-core")
+    }
+    logger.debug("Added vertx-core as a compile dependency")
   }
 
   private fun defineJavaSourceCompatibility(project: Project) {
