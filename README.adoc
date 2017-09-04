@@ -85,7 +85,7 @@ The following configuration can be applied, and matches the `vertx run` command-
 * `onRedeploy`: the script / application to run before redeploying
 * `redeployScanPeriod` / `redeployGracePeriod` / `redeployTerminationPeriod`: tuning for the redeployment watch timers.
 
-The default values are listed in include::src/main/kotlin/io/vertx/gradle/VertxExtension.kt[].
+The default values are listed in `src/main/kotlin/io/vertx/gradle/VertxExtension.kt`.
 
 By default redeployment is enabled, running `gradle classes` to recompile, and watching all files under `src/`.
 
