@@ -1,6 +1,7 @@
 plugins {
-  id 'org.jetbrains.kotlin.jvm' version '1.1.4-3'
   id 'java-gradle-plugin'
+  id 'org.jetbrains.kotlin.jvm' version '1.1.4-3'
+  id 'com.github.ben-manes.versions' version '0.15.0'
 }
 
 repositories {
@@ -12,7 +13,7 @@ dependencies {
   compile 'org.jetbrains.kotlin:kotlin-stdlib:1.1.4-3'
   compile 'org.jetbrains.kotlin:kotlin-stdlib-jre8:1.1.4-3'
   compile 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
-  compile 'com.netflix.nebula:nebula-dependency-recommender:4.3.0'
+  compile 'com.netflix.nebula:nebula-dependency-recommender:5.0.0'
   testCompile 'junit:junit:4.12'
   testCompile 'org.assertj:assertj-core:3.8.0'
   testCompile 'com.github.kittinunf.fuel:fuel:1.9.0'
