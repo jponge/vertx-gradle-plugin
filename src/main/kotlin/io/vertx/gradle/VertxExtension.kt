@@ -29,20 +29,20 @@ open class VertxExtension(private val project: Project) {
 
   var vertxVersion = "3.4.2"
 
-  var launcher: String = "io.vertx.core.Launcher"
-  var mainVerticle: String = ""
+  var launcher = "io.vertx.core.Launcher"
+  var mainVerticle = ""
 
   var args = listOf<String>()
-  var config: String = ""
-  var workDirectory: String = project.projectDir.absolutePath
+  var config = ""
+  var workDirectory = project.projectDir.absolutePath
   var jvmArgs = listOf<String>()
 
-  var redeploy: Boolean = true
+  var redeploy = true
   var watch = listOf("${project.projectDir.absolutePath}/src/**/*")
-  var onRedeploy: String = findGradleScript()
-  var redeployScanPeriod: Long = 1000
-  var redeployGracePeriod: Long = 1000
-  var redeployTerminationPeriod: Long = 1000
+  var onRedeploy = findGradleScript()
+  var redeployScanPeriod = 1000L
+  var redeployGracePeriod = 1000L
+  var redeployTerminationPeriod = 1000L
 
   private fun findGradleScript(): String {
     val gradlewScript = if (Os.isFamily(Os.FAMILY_WINDOWS)) "gradlew.bat" else "gradlew"
