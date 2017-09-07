@@ -120,7 +120,7 @@ class VertxPlugin : Plugin<Project> {
   }
 
   private fun createVertxRunTask(project: Project) {
-    project.tasks.create("vertxRun", JavaExec::class.java)
+    project.tasks.create("vertxRun", JavaExec::class.java).dependsOn("classes")
     logger.debug("The vertxRun task has been created")
   }
 
