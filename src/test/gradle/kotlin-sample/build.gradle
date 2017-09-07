@@ -1,0 +1,33 @@
+buildscript {
+  repositories {
+    jcenter()
+  }
+  dependencies {
+    classpath 'io.vertx:vertx-gradle-plugin'
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.1.4-3"
+  }
+}
+
+apply plugin: 'io.vertx.vertx-plugin'
+apply plugin: "org.jetbrains.kotlin.jvm"
+
+repositories {
+  jcenter()
+}
+
+dependencies {
+  compile "io.vertx:vertx-web"
+  compile "io.vertx:vertx-lang-kotlin"
+  compile "org.jetbrains.kotlin:kotlin-stdlib-jre8"
+  compile "ch.qos.logback:logback-classic:1.2.3"
+}
+
+vertx {
+  mainVerticle = "sample.App"
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
