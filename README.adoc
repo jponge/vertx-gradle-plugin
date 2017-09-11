@@ -69,6 +69,41 @@ vertx {
 <2> Logback needs a version.
 <3> You can override to point to any specific release of Vert.x.
 
+=== Kotlin projects
+
+The plugin works great with Kotlin:
+
+
+[source,groovy]
+----
+plugins {
+  id 'io.vertx.vertx-plugin' version 'x.y.z'
+  id 'org.jetbrains.kotlin.jvm' version 'a.b.c'
+}
+
+repositories {
+  jcenter()
+}
+
+dependencies {
+  compile 'io.vertx:vertx-lang-kotlin'
+  compile 'org.jetbrains.kotlin:kotlin-stdlib-jre8'  // <1>
+}
+
+vertx {
+  mainVerticle = "sample.MainVerticle"  // <2>
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {   // <3>
+  kotlinOptions {
+    jvmTarget = "1.8"
+  }
+}
+----
+<1> This pulls all the Kotlin standard library dependencies for JDK 8+.
+<2> This verticle can be written in Kotlin (or Java).
+<3> By default Kotlin compiles to Java 6 bytecode, so it is worth changing all compilation tasks to match Java 8 bytecode.
+
 == Configuration
 
 The configuration happens through the `vertx` Gradle extension.
