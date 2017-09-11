@@ -118,7 +118,7 @@ The following configuration can be applied, and matches the `vertx run` command-
 
 |`vertxVersion`
 |the Vert.x version to use
-|"3.4.2"
+|`"3.4.2"`
 
 |`launcher`
 |the main class name
@@ -126,7 +126,7 @@ The following configuration can be applied, and matches the `vertx run` command-
 
 |`mainVerticle`
 |the main verticle, when using `io.vertx.core.Launcher` as `launcher`
-| ""
+| `""`
 
 |`args`
 |a list of command-line arguments to pass
@@ -134,7 +134,7 @@ The following configuration can be applied, and matches the `vertx run` command-
 
 |`config`
 |either a file or direct JSON data to provide configuration
-|""
+|`""`
 
 |`workDirectory`
 |the working directory
@@ -146,7 +146,7 @@ The following configuration can be applied, and matches the `vertx run` command-
 
 |`redeploy`
 |whether automatic redeployment shall happen or not
-|true
+|`true`
 
 |`watch`
 |Ant-style matchers for files to watch for modifications, comma-separated
@@ -158,7 +158,7 @@ The following configuration can be applied, and matches the `vertx run` command-
 
 |`redeployScanPeriod` / `redeployGracePeriod` / `redeployTerminationPeriod`
 |tuning for the redeployment watch timers
-|1 second each
+|`1000L` (1 second each)
 
 |===
 
