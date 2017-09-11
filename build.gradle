@@ -30,7 +30,6 @@ version = '0.0.2'
 group = 'io.vertx'
 
 dependencies {
-  compile 'org.jetbrains.kotlin:kotlin-stdlib'
   compile 'org.jetbrains.kotlin:kotlin-stdlib-jre8'
   compile 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
   compile 'com.netflix.nebula:nebula-dependency-recommender:5.0.0'
@@ -64,4 +63,10 @@ pluginBundle {
 task wrapper(type: Wrapper) {
   gradleVersion = '4.1'
   distributionType = 'all'
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+  kotlinOptions {
+    jvmTarget = "1.8"
+  }
 }
