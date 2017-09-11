@@ -20,6 +20,7 @@ import com.github.jengelman.gradle.plugins.shadow.ShadowPlugin
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import netflix.nebula.dependency.recommender.DependencyRecommendationsPlugin
 import netflix.nebula.dependency.recommender.provider.RecommendationProviderContainer
+import org.apache.tools.ant.taskdefs.condition.Os
 import org.gradle.api.GradleException
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
@@ -41,7 +42,10 @@ class VertxPlugin : Plugin<Project> {
 
   private val logger = LoggerFactory.getLogger(VertxPlugin::class.java)
 
+  private lateinit var gradleCommand: String
+
   override fun apply(project: Project) {
+    findGradleCommand(project)
     installVertxExtension(project)
     applyOtherPlugins(project)
     defineJavaSourceCompatibility(project)
@@ -54,6 +58,12 @@ class VertxPlugin : Plugin<Project> {
       configureShadowPlugin(project)
       configureVertxRunTask(project)
     }
+  }
+
+  private fun findGradleCommand(project: Project) {
+    val gradlewScript = if (Os.isFamily(Os.FAMILY_WINDOWS)) "gradlew.bat" else "gradlew"
+    val gradlewScriptFile = File(project.projectDir, gradlewScript)
+    gradleCommand = if (gradlewScriptFile.exists()) gradlewScriptFile.absolutePath else "gradle"
   }
 
   private fun installVertxExtension(project: Project) {
@@ -156,7 +166,7 @@ class VertxPlugin : Plugin<Project> {
         args("--redeploy-scan-period", vertxExtension.redeployScanPeriod)
         args("--redeploy-termination-period", vertxExtension.redeployTerminationPeriod)
         if (vertxExtension.onRedeploy.isNotBlank()) {
-          args("--on-redeploy", vertxExtension.onRedeploy)
+          args("--on-redeploy", "$gradleCommand ${vertxExtension.onRedeploy}")
         }
       } else {
         main = vertxExtension.launcher

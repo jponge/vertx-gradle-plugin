@@ -30,7 +30,7 @@ version = '0.0.2'
 group = 'io.vertx'
 
 dependencies {
-  compile 'org.jetbrains.kotlin:kotlin-stdlib-jre8'
+  compile 'org.jetbrains.kotlin:kotlin-stdlib-jre8:1.1.4-3'
   compile 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
   compile 'com.netflix.nebula:nebula-dependency-recommender:5.0.0'
   testCompile 'junit:junit:4.12'

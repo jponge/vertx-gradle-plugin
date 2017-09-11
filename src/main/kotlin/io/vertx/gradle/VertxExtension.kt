@@ -39,16 +39,10 @@ open class VertxExtension(private val project: Project) {
 
   var redeploy = true
   var watch = listOf("${project.projectDir.absolutePath}/src/**/*")
-  var onRedeploy = findGradleScript()
+  var onRedeploy = "classes"
   var redeployScanPeriod = 1000L
   var redeployGracePeriod = 1000L
   var redeployTerminationPeriod = 1000L
-
-  private fun findGradleScript(): String {
-    val gradlewScript = if (Os.isFamily(Os.FAMILY_WINDOWS)) "gradlew.bat" else "gradlew"
-    val gradlewScriptFile = File(project.projectDir, gradlewScript)
-    return if (gradlewScriptFile.exists()) "${gradlewScriptFile.absolutePath} classes" else "gradle classes"
-  }
 
   override fun toString(): String {
     return "VertxExtension(project=$project, vertxVersion='$vertxVersion', launcher='$launcher', mainVerticle='$mainVerticle', args=$args, config='$config', workDirectory='$workDirectory', jvmArgs=$jvmArgs, redeploy=$redeploy, watch=$watch, onRedeploy='$onRedeploy', redeployScanPeriod=$redeployScanPeriod, redeployGracePeriod=$redeployGracePeriod, redeployTerminationPeriod=$redeployTerminationPeriod)"
