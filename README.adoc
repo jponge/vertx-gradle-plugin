@@ -154,7 +154,7 @@ The following configuration can be applied, and matches the `vertx run` command-
 
 |`onRedeploy`
 |the Gradle tasks to run before redeploying
-| One of `gradle`, `gradlew` or `gradlew.bat` depending on the environment
+|`["classes"]`
 
 |`redeployScanPeriod` / `redeployGracePeriod` / `redeployTerminationPeriod`
 |tuning for the redeployment watch timers

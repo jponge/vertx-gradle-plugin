@@ -165,8 +165,8 @@ class VertxPlugin : Plugin<Project> {
         args("--redeploy-grace-period", vertxExtension.redeployGracePeriod)
         args("--redeploy-scan-period", vertxExtension.redeployScanPeriod)
         args("--redeploy-termination-period", vertxExtension.redeployTerminationPeriod)
-        if (vertxExtension.onRedeploy.isNotBlank()) {
-          args("--on-redeploy", "$gradleCommand ${vertxExtension.onRedeploy}")
+        if (vertxExtension.onRedeploy.isNotEmpty()) {
+          args("--on-redeploy", "$gradleCommand ${vertxExtension.onRedeploy.joinToString(separator = " ")}")
         }
       } else {
         main = vertxExtension.launcher

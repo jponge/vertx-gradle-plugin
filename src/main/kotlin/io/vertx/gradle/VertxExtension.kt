@@ -39,7 +39,7 @@ open class VertxExtension(private val project: Project) {
 
   var redeploy = true
   var watch = listOf("${project.projectDir.absolutePath}/src/**/*")
-  var onRedeploy = "classes"
+  var onRedeploy = listOf("classes")
   var redeployScanPeriod = 1000L
   var redeployGracePeriod = 1000L
   var redeployTerminationPeriod = 1000L
