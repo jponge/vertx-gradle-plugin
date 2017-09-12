@@ -161,20 +161,20 @@ class VertxPlugin : Plugin<Project> {
 
         args("--launcher-class", vertxExtension.launcher)
         args("--redeploy", vertxExtension.watch.joinToString(separator = ","))
-        args("--redeploy-grace-period", vertxExtension.redeployGracePeriod)
-        args("--redeploy-scan-period", vertxExtension.redeployScanPeriod)
-        args("--redeploy-termination-period", vertxExtension.redeployTerminationPeriod)
         if (vertxExtension.onRedeploy.isNotEmpty()) {
           args("--on-redeploy", "$gradleCommand ${vertxExtension.onRedeploy.joinToString(separator = " ")}")
         }
+        args("--redeploy-grace-period", vertxExtension.redeployGracePeriod)
+        args("--redeploy-scan-period", vertxExtension.redeployScanPeriod)
+        args("--redeploy-termination-period", vertxExtension.redeployTerminationPeriod)
       } else {
         main = vertxExtension.launcher
       }
 
-      vertxExtension.args.forEach { args(it) }
       if (vertxExtension.config.isNotBlank()) {
         args("--conf", vertxExtension.config)
       }
+      vertxExtension.args.forEach { args(it) }
     }
 
     logger.debug("The vertxRun task has been configured")
