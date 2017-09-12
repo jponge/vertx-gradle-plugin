@@ -149,8 +149,8 @@ The following configuration can be applied, and matches the `vertx run` command-
 |`true`
 
 |`watch`
-|Ant-style matchers for files to watch for modifications, comma-separated
-|`src/\**/*`
+|Ant-style matchers for files to watch for modifications
+|[`src/\**/*`]
 
 |`onRedeploy`
 |the Gradle tasks to run before redeploying
