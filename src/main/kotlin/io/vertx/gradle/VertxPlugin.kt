@@ -160,8 +160,7 @@ class VertxPlugin : Plugin<Project> {
         }
 
         args("--launcher-class", vertxExtension.launcher)
-        args("--redeploy")
-        vertxExtension.watch.forEach { args(it) }
+        args("--redeploy", vertxExtension.watch.joinToString(separator = ","))
         args("--redeploy-grace-period", vertxExtension.redeployGracePeriod)
         args("--redeploy-scan-period", vertxExtension.redeployScanPeriod)
         args("--redeploy-termination-period", vertxExtension.redeployTerminationPeriod)
