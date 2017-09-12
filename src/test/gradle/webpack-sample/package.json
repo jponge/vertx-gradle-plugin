@@ -1,0 +1,17 @@
+{
+  "name": "webpack-sample",
+  "version": "0.0.1",
+  "description": "A sample with Vert.x, Gradle and Webpack",
+  "main": "src/main/webapp/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^2.7.0"
+  },
+  "dependencies": {
+    "axios": "^0.16.2"
+  }
+}

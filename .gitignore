@@ -7,3 +7,4 @@ bin/
 .project
 .vscode/
 .settings/
+node_modules/

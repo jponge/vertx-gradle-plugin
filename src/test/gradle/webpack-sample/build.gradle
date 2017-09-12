@@ -1,0 +1,37 @@
+buildscript {
+  repositories {
+    jcenter()
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
+  }
+  dependencies {
+    classpath 'io.vertx:vertx-gradle-plugin'
+    classpath 'com.moowork.gradle:gradle-node-plugin:1.2.0'
+  }
+}
+
+apply plugin: 'io.vertx.vertx-plugin'
+apply plugin: 'com.moowork.node'
+
+repositories {
+  jcenter()
+}
+
+dependencies {
+  compile "io.vertx:vertx-web"
+}
+
+vertx {
+  mainVerticle = "sample.MainVerticle"
+  watch = ["src/**/*", "build.gradle", "yarn.lock"]
+  onRedeploy = ["classes", "webpack"]
+}
+
+task webpack(type: Exec) {
+  inputs.file("$projectDir/yarn.lock")
+  inputs.file("$projectDir/webpack.config.js")
+  inputs.dir("$projectDir/src/main/webapp")
+  outputs.dir("$buildDir/resources/main/webroot")
+  commandLine "$projectDir/node_modules/.bin/webpack"
+}
