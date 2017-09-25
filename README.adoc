@@ -16,7 +16,7 @@ The plugin automatically adds `io.vertx:vertx-core` as a `compile` dependency, s
 
 The plugin provides a `vertxRun` task that can take advantage of the Vert.x auto-reloading capabilities, so you can _just_ run it then have you code being automatically compiled and reloaded as you make changes.
 
-NOTE: Because of the way Gradle daemon caching works, you may prefer running the `vertxRun` task with `gradle --no-daemon vertxRun` to avoid previous runs still being running in the background.
+NOTE: If you encounter issues with your application still being running in the background due to how the Gradle caching works, then you may try running the `vertxRun` task with `gradle --no-daemon vertxRun`.
 
 === Minimal example
 
