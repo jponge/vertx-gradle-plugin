@@ -147,18 +147,18 @@ class VertxPlugin : Plugin<Project> {
       jvmArgs(vertxExtension.jvmArgs)
       classpath(mainSourceSet.runtimeClasspath)
 
-      if (vertxExtension.redeploy) {
-        main = "io.vertx.core.Launcher"
+      main = if (vertxExtension.redeploy) "io.vertx.core.Launcher" else vertxExtension.launcher
 
-        if (vertxExtension.launcher == "io.vertx.core.Launcher") {
-          if (vertxExtension.mainVerticle.isBlank()) {
-            throw GradleException("Extension property vertx.mainVerticle must be specified when using io.vertx.core.Launcher as a launcher")
-          }
-          args("run", vertxExtension.mainVerticle)
-        } else {
-          args("run")
+      if (vertxExtension.launcher == "io.vertx.core.Launcher") {
+        if (vertxExtension.mainVerticle.isBlank()) {
+          throw GradleException("Extension property vertx.mainVerticle must be specified when using io.vertx.core.Launcher as a launcher")
         }
+        args("run", vertxExtension.mainVerticle)
+      } else if (vertxExtension.redeploy) {
+        args("run")
+      }
 
+      if (vertxExtension.redeploy) {
         args("--launcher-class", vertxExtension.launcher)
         args("--redeploy", vertxExtension.watch.joinToString(separator = ","))
         if (vertxExtension.onRedeploy.isNotEmpty()) {
@@ -167,8 +167,6 @@ class VertxPlugin : Plugin<Project> {
         args("--redeploy-grace-period", vertxExtension.redeployGracePeriod)
         args("--redeploy-scan-period", vertxExtension.redeployScanPeriod)
         args("--redeploy-termination-period", vertxExtension.redeployTerminationPeriod)
-      } else {
-        main = vertxExtension.launcher
       }
 
       if (vertxExtension.config.isNotBlank()) {
