@@ -27,7 +27,7 @@ import java.io.File
  */
 open class VertxExtension(private val project: Project) {
 
-  var vertxVersion = "3.4.2"
+  var vertxVersion = "3.5.0"
 
   var launcher = "io.vertx.core.Launcher"
   var mainVerticle = ""
