@@ -44,7 +44,10 @@ open class VertxExtension(private val project: Project) {
   var redeployGracePeriod = 1000L
   var redeployTerminationPeriod = 1000L
 
+  var debugPort = 5005L
+  var debugSuspend  = false
+
   override fun toString(): String {
-    return "VertxExtension(project=$project, vertxVersion='$vertxVersion', launcher='$launcher', mainVerticle='$mainVerticle', args=$args, config='$config', workDirectory='$workDirectory', jvmArgs=$jvmArgs, redeploy=$redeploy, watch=$watch, onRedeploy='$onRedeploy', redeployScanPeriod=$redeployScanPeriod, redeployGracePeriod=$redeployGracePeriod, redeployTerminationPeriod=$redeployTerminationPeriod)"
+    return "VertxExtension(project=$project, vertxVersion='$vertxVersion', launcher='$launcher', mainVerticle='$mainVerticle', args=$args, config='$config', workDirectory='$workDirectory', jvmArgs=$jvmArgs, redeploy=$redeploy, watch=$watch, onRedeploy='$onRedeploy', redeployScanPeriod=$redeployScanPeriod, redeployGracePeriod=$redeployGracePeriod, redeployTerminationPeriod=$redeployTerminationPeriod, debugPort=$debugPort, debugSuspend=$debugSuspend)"
   }
 }

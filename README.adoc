@@ -18,6 +18,10 @@ The plugin provides a `vertxRun` task that can take advantage of the Vert.x auto
 
 NOTE: If you encounter issues with your application still being running in the background due to how the Gradle caching works, then you may try running the `vertxRun` task with `gradle --no-daemon vertxRun`.
 
+The plugin provides a `vertxDebug` task enabling to debug your code.
+
+NOTE: Reloading is disabled while debugging.
+
 === Minimal example
 
 [source,groovy]
@@ -159,6 +163,14 @@ The following configuration can be applied, and matches the `vertx run` command-
 |`redeployScanPeriod` / `redeployGracePeriod` / `redeployTerminationPeriod`
 |tuning for the redeployment watch timers
 |`1000L` (1 second each)
+
+|`debugPort`
+| The debugger port
+|`5005L`
+
+|`debugSuspend`
+| Whether or not the application must wait until a debugger is attached to start
+|`false`
 
 |===
 
