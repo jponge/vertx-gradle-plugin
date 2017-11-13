@@ -20,7 +20,7 @@ NOTE: If you encounter issues with your application still being running in the b
 
 The plugin provides a `vertxDebug` task enabling to debug your code.
 
-NOTE: Reloading is disabled while debugging.
+NOTE: Reloading is disabled while debugging. Moreover in order to prevent warnings while in debug mode, Vert.x options maxEventLoopExecuteTime and maxWorkerExecuteTime are set to `java.lang.Long.MAX_VALUE`
 
 === Minimal example
 
