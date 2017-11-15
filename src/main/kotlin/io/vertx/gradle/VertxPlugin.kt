@@ -194,7 +194,7 @@ class VertxPlugin : Plugin<Project> {
       jvmArgs(computeDebugOptions(project))
       classpath(mainSourceSet.runtimeClasspath)
 
-      main = if (vertxExtension.redeploy) "io.vertx.core.Launcher" else vertxExtension.launcher
+      main = vertxExtension.launcher
 
       if (vertxExtension.launcher == "io.vertx.core.Launcher") {
         if (vertxExtension.mainVerticle.isBlank()) {
@@ -209,15 +209,15 @@ class VertxPlugin : Plugin<Project> {
       vertxExtension.args.forEach { args(it) }
     }
 
-    logger.debug("The vertxRun task has been configured")
+    logger.debug("The vertxDebug task has been configured")
   }
 
   private fun computeDebugOptions(project: Project): List<String> {
     val vertxExtension = project.vertxExtension()
     val debugger = "-agentlib:jdwp=transport=dt_socket,server=y,suspend=" +
-      (if (vertxExtension.debugSuspend) "y" else "n") + ",address=" + vertxExtension.debugPort
-    val disableEventLoopchecker = "-Dvertx.options.maxEventLoopExecuteTime=" + java.lang.Long.MAX_VALUE
-    val disableWorkerchecker = "-Dvertx.options.maxWorkerExecuteTime=" + java.lang.Long.MAX_VALUE
+      (if (vertxExtension.debugSuspend) "y" else "n") + ",address=${vertxExtension.debugPort}"
+    val disableEventLoopchecker = "-Dvertx.options.maxEventLoopExecuteTime=${java.lang.Long.MAX_VALUE}"
+    val disableWorkerchecker = "-Dvertx.options.maxWorkerExecuteTime=${java.lang.Long.MAX_VALUE}"
     val mark = "-Dvertx.debug=true"
 
     return arrayListOf(debugger, disableEventLoopchecker, disableWorkerchecker, mark)
