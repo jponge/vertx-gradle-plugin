@@ -49,7 +49,7 @@ class VertxPlugin : Plugin<Project> {
     installVertxExtension(project)
     applyOtherPlugins(project)
     defineJavaSourceCompatibility(project)
-    createVertxRunTask(project)
+    createVertxTasks(project)
     project.afterEvaluate {
       logger.debug("Vert.x plugin configuration: ${project.vertxExtension()}")
       configureDependencyRecommendationslugin(project)
@@ -57,6 +57,7 @@ class VertxPlugin : Plugin<Project> {
       defineMainClassName(project)
       configureShadowPlugin(project)
       configureVertxRunTask(project)
+      configureVertxDebugTask(project)
     }
   }
 
@@ -129,9 +130,10 @@ class VertxPlugin : Plugin<Project> {
     logger.debug("The shadow plugin has been configured")
   }
 
-  private fun createVertxRunTask(project: Project) {
+  private fun createVertxTasks(project: Project) {
     project.tasks.create("vertxRun", JavaExec::class.java).dependsOn("classes")
-    logger.debug("The vertxRun task has been created")
+    project.tasks.create("vertxDebug", JavaExec::class.java).dependsOn("classes")
+    logger.debug("The vertx tasks have been created")
   }
 
   private fun configureVertxRunTask(project: Project) {
@@ -176,6 +178,49 @@ class VertxPlugin : Plugin<Project> {
     }
 
     logger.debug("The vertxRun task has been configured")
+  }
+
+  private fun configureVertxDebugTask(project: Project) {
+    val vertxExtension = project.vertxExtension()
+    val javaConvention = project.convention.getPlugin(JavaPluginConvention::class.java)
+    val mainSourceSet = javaConvention.sourceSets.getByName("main")
+
+    (project.tasks.getByName("vertxDebug") as JavaExec).apply {
+      group = "Application"
+      description = "Debugs this project as a Vert.x application"
+
+      workingDir(File(vertxExtension.workDirectory))
+      jvmArgs(vertxExtension.jvmArgs)
+      jvmArgs(computeDebugOptions(project))
+      classpath(mainSourceSet.runtimeClasspath)
+
+      main = vertxExtension.launcher
+
+      if (vertxExtension.launcher == "io.vertx.core.Launcher") {
+        if (vertxExtension.mainVerticle.isBlank()) {
+          throw GradleException("Extension property vertx.mainVerticle must be specified when using io.vertx.core.Launcher as a launcher")
+        }
+        args("run", vertxExtension.mainVerticle)
+      }
+
+      if (vertxExtension.config.isNotBlank()) {
+        args("--conf", vertxExtension.config)
+      }
+      vertxExtension.args.forEach { args(it) }
+    }
+
+    logger.debug("The vertxDebug task has been configured")
+  }
+
+  private fun computeDebugOptions(project: Project): List<String> {
+    val vertxExtension = project.vertxExtension()
+    val debugger = "-agentlib:jdwp=transport=dt_socket,server=y,suspend=" +
+      (if (vertxExtension.debugSuspend) "y" else "n") + ",address=${vertxExtension.debugPort}"
+    val disableEventLoopchecker = "-Dvertx.options.maxEventLoopExecuteTime=${java.lang.Long.MAX_VALUE}"
+    val disableWorkerchecker = "-Dvertx.options.maxWorkerExecuteTime=${java.lang.Long.MAX_VALUE}"
+    val mark = "-Dvertx.debug=true"
+
+    return arrayListOf(debugger, disableEventLoopchecker, disableWorkerchecker, mark)
   }
 }
 
