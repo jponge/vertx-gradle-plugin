@@ -162,6 +162,9 @@ class VertxPlugin : Plugin<Project> {
 
       if (vertxExtension.redeploy) {
         args("--launcher-class", vertxExtension.launcher)
+        if (vertxExtension.jvmArgs.isNotEmpty()) {
+          args("--java-opts", vertxExtension.jvmArgs.joinToString(separator = " ", prefix = "\"", postfix = "\""))
+        }
         args("--redeploy", vertxExtension.watch.joinToString(separator = ","))
         if (vertxExtension.onRedeploy.isNotEmpty()) {
           args("--on-redeploy", "$gradleCommand ${vertxExtension.onRedeploy.joinToString(separator = " ")}")
