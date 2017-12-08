@@ -2,14 +2,18 @@
 
 An _opinionated_ Gradle plugin for Vert.x projects.
 
+image:https://img.shields.io/badge/release-0.0.6-green.svg[release, link=https://plugins.gradle.org/plugin/io.vertx.vertx-plugin]
+image:https://img.shields.io/github/license/jponge/vertx-gradle-plugin.svg[license, link=https://github.com/jponge/vertx-gradle-plugin/blob/master/LICENSE]
+
 == What the plugin does
 
-This plugin simplifies building and running Vert.x applications.
+This https://plugins.gradle.org/plugin/io.vertx.vertx-plugin[plugin] simplifies building and running Vert.x applications with Gradle.
 
-It automatically applies the following plugin:
+It automatically applies the following plugins:
 
-* `java` (and sets the source compatibility to Java 8)
-* `application` + https://github.com/johnrengelman/shadow[`shadow`] to generate _fat Jars_ with all dependencies bundled
+* `https://docs.gradle.org/current/userguide/java_plugin.html[java]` (and sets the source compatibility to Java 8)
+* `https://docs.gradle.org/current/userguide/application_plugin.html[application]` + `https://docs.gradle.org/current/userguide/distribution_plugin.html[distribution]` for packaging the app for the JVM
+* `https://github.com/johnrengelman/shadow[shadow]` to generate _fat Jars_ with all dependencies bundled
 * https://github.com/nebula-plugins/nebula-dependency-recommender-plugin[`nebula-dependency-recommender-plugin`] so that you can omit versions from elements in the https://github.com/vert-x3/vertx-dependencies[the Vert.x stack]
 
 The plugin automatically adds `io.vertx:vertx-core` as a `compile` dependency, so you don't need to do it.
@@ -75,7 +79,7 @@ vertx {
 
 === Kotlin projects
 
-The plugin works great with Kotlin:
+This plugin works with Kotlin projects too:
 
 
 [source,groovy]
@@ -196,9 +200,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ----
 
-The plugin was originally created by https://julien.ponge.org/[Julien Ponge].
-
 == Credits
+
+The plugin was originally created by https://julien.ponge.org/[Julien Ponge].
 
 Thanks to the folks at Gradle for their guidance and technical discussions:
 
@@ -207,3 +211,5 @@ Thanks to the folks at Gradle for their guidance and technical discussions:
 * Rodrigo B. de Oliveira
 * Eric Wendelin
 * Benjamin Muschko
+
+And to all the contributors of this project.
