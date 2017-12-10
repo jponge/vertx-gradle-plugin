@@ -2,7 +2,7 @@
 
 An _opinionated_ Gradle plugin for Vert.x projects.
 
-image:https://img.shields.io/badge/release-0.0.6-green.svg[release, link=https://plugins.gradle.org/plugin/io.vertx.vertx-plugin]
+image:https://img.shields.io/github/tag/jponge/vertx-gradle-plugin.svg[tag, link=https://plugins.gradle.org/plugin/io.vertx.vertx-plugin]
 image:https://img.shields.io/github/license/jponge/vertx-gradle-plugin.svg[license, link=https://github.com/jponge/vertx-gradle-plugin/blob/master/LICENSE]
 
 == What the plugin does
