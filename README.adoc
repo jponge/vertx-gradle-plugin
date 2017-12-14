@@ -212,4 +212,4 @@ Thanks to the folks at Gradle for their guidance and technical discussions:
 * Eric Wendelin
 * Benjamin Muschko
 
-And to all the contributors of this project.
+Thanks also to https://github.com/jponge/vertx-gradle-plugin/graphs/contributors[all the contributors to this project].
