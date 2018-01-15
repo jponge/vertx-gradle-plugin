@@ -14,7 +14,7 @@ It automatically applies the following plugins:
 * `https://docs.gradle.org/current/userguide/java_plugin.html[java]` (and sets the source compatibility to Java 8)
 * `https://docs.gradle.org/current/userguide/application_plugin.html[application]` + `https://docs.gradle.org/current/userguide/distribution_plugin.html[distribution]` for packaging the app for the JVM
 * `https://github.com/johnrengelman/shadow[shadow]` to generate _fat Jars_ with all dependencies bundled
-* https://github.com/nebula-plugins/nebula-dependency-recommender-plugin[`nebula-dependency-recommender-plugin`] so that you can omit versions from elements in the https://github.com/vert-x3/vertx-dependencies[the Vert.x stack]
+* https://github.com/nebula-plugins/nebula-dependency-recommender-plugin[`nebula-dependency-recommender-plugin`] so that you can omit versions from elements in the https://github.com/vert-x3/vertx-stack[the Vert.x stack]
 
 The plugin automatically adds `io.vertx:vertx-core` as a `compile` dependency, so you don't need to do it.
 

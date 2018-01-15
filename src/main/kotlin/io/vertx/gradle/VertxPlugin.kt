@@ -87,7 +87,7 @@ class VertxPlugin : Plugin<Project> {
     val recommendations = project.extensions.getByName("dependencyRecommendations") as RecommendationProviderContainer
     val vertxVersion = project.vertxExtension().vertxVersion
     recommendations.apply {
-      mavenBom(mapOf("module" to "io.vertx:vertx-dependencies:$vertxVersion"))
+      mavenBom(mapOf("module" to "io.vertx:vertx-stack-depchain:$vertxVersion"))
     }
     project.extensions.extraProperties["stack.version"] = vertxVersion
     logger.debug("Recommending Vert.x version $vertxVersion")
