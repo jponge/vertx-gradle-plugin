@@ -16,9 +16,7 @@
 
 package io.vertx.gradle
 
-import org.apache.tools.ant.taskdefs.condition.Os
 import org.gradle.api.Project
-import java.io.File
 
 /**
  * Vertx Gradle extension.
