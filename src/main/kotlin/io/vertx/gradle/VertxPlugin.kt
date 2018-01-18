@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Red Hat, Inc.
+ * Copyright 2017-2018 Red Hat, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,7 +52,7 @@ class VertxPlugin : Plugin<Project> {
     createVertxTasks(project)
     project.afterEvaluate {
       logger.debug("Vert.x plugin configuration: ${project.vertxExtension()}")
-      configureDependencyRecommendationslugin(project)
+      configureDependencyRecommendationsPlugin(project)
       addVertxCoreDependency(project)
       defineMainClassName(project)
       configureShadowPlugin(project)
@@ -83,7 +83,7 @@ class VertxPlugin : Plugin<Project> {
     logger.debug("The plugins needed by the Vert.x plugin have been applied")
   }
 
-  private fun configureDependencyRecommendationslugin(project: Project) {
+  private fun configureDependencyRecommendationsPlugin(project: Project) {
     val recommendations = project.extensions.getByName("dependencyRecommendations") as RecommendationProviderContainer
     val vertxVersion = project.vertxExtension().vertxVersion
     recommendations.apply {

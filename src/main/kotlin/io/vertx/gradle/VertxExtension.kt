@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Red Hat, Inc.
+ * Copyright 2017-2018 Red Hat, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,7 @@
 
 package io.vertx.gradle
 
-import org.apache.tools.ant.taskdefs.condition.Os
 import org.gradle.api.Project
-import java.io.File
 
 /**
  * Vertx Gradle extension.
