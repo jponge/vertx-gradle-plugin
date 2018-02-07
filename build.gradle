@@ -16,8 +16,8 @@
 
 plugins {
   id 'java-gradle-plugin'
-  id 'com.gradle.plugin-publish' version '0.9.9'
-  id 'org.jetbrains.kotlin.jvm' version '1.2.10'
+  id 'com.gradle.plugin-publish' version '0.9.10'
+  id 'org.jetbrains.kotlin.jvm' version '1.2.21'
   id 'com.github.ben-manes.versions' version '0.17.0'
 }
 
@@ -30,8 +30,8 @@ version = '0.0.8-SNAPSHOT'
 group = 'io.vertx'
 
 dependencies {
-  compile 'org.jetbrains.kotlin:kotlin-stdlib:1.2.10'
-  compile 'org.jetbrains.kotlin:kotlin-stdlib-jre8:1.2.10'
+  compile 'org.jetbrains.kotlin:kotlin-stdlib:1.2.21'
+  compile 'org.jetbrains.kotlin:kotlin-stdlib-jre8:1.2.21'
   compile 'com.github.jengelman.gradle.plugins:shadow:2.0.2'
   compile 'com.netflix.nebula:nebula-dependency-recommender:5.1.0'
   testCompile 'junit:junit:4.12'
