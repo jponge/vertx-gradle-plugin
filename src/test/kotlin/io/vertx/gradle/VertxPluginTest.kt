@@ -22,7 +22,7 @@ import org.junit.Test
 import java.io.File
 import java.util.concurrent.TimeUnit
 import java.util.jar.JarFile
-import com.github.kittinunf.fuel.*
+import com.mashape.unirest.http.Unirest
 
 /**
  * @author [Julien Ponge](https://julien.ponge.org/)
@@ -66,8 +66,10 @@ class VertxPluginTest {
       .build()
 
     run("java", "-jar", "src/test/gradle/simple-project/build/libs/simple-project-fat.jar") {
-      val (_, _, res) = "http://localhost:18080/".httpGet().responseString()
-      assertThat(res.get()).isEqualTo("Yo!")
+      val response = Unirest.get("http://localhost:18080/").asString()
+      Unirest.shutdown()
+      assertThat(response.status).isEqualTo(200)
+      assertThat(response.body).isEqualTo("Yo!")
     }
   }
 }

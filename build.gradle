@@ -35,8 +35,8 @@ dependencies {
   implementation 'com.netflix.nebula:nebula-dependency-recommender:5.2.0'
 
   testImplementation 'junit:junit:4.12'
+  testImplementation 'com.mashape.unirest:unirest-java:1.4.9'
   testImplementation 'org.assertj:assertj-core:3.10.0'
-  testImplementation 'com.github.kittinunf.fuel:fuel:1.13.0'
 }
 
 gradlePlugin {
