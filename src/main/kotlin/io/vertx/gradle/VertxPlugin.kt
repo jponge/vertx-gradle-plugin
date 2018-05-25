@@ -32,6 +32,7 @@ import org.gradle.api.plugins.JavaPluginConvention
 import org.gradle.api.tasks.JavaExec
 import org.slf4j.LoggerFactory
 import java.io.File
+import java.util.*
 
 /**
  * A Gradle plugin for Eclipse Vert.x projects.
@@ -65,16 +66,16 @@ class VertxPlugin : Plugin<Project> {
     val globalGradle = if (Os.isFamily(Os.FAMILY_WINDOWS)) "gradle.bat" else "gradle"
     val gradlewScript = if (Os.isFamily(Os.FAMILY_WINDOWS)) "gradlew.bat" else "gradlew"
 
-    fun recurse(dir: File): String? {
+    fun findRecursively(dir: File): Optional<String> {
       val script = File(dir, gradlewScript)
       return when {
-        script.exists() -> script.absolutePath
-        dir.parentFile != null -> recurse(dir.parentFile)
-        else -> null
+        script.exists() -> Optional.of(script.absolutePath)
+        dir.parentFile != null -> findRecursively(dir.parentFile)
+        else -> Optional.empty()
       }
     }
 
-    gradleCommand = recurse(project.projectDir) ?: globalGradle
+    gradleCommand = findRecursively(project.projectDir).orElse(globalGradle)
   }
 
   private fun installVertxExtension(project: Project) {
