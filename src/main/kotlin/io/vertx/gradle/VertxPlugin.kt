@@ -62,9 +62,19 @@ class VertxPlugin : Plugin<Project> {
   }
 
   private fun findGradleCommand(project: Project) {
+    val globalGradle = if (Os.isFamily(Os.FAMILY_WINDOWS)) "gradle.bat" else "gradle"
     val gradlewScript = if (Os.isFamily(Os.FAMILY_WINDOWS)) "gradlew.bat" else "gradlew"
-    val gradlewScriptFile = File(project.projectDir, gradlewScript)
-    gradleCommand = if (gradlewScriptFile.exists()) gradlewScriptFile.absolutePath else "gradle"
+
+    fun recurse(dir: File): String? {
+      val script = File(dir, gradlewScript)
+      return when {
+        script.exists() -> script.absolutePath
+        dir.parentFile != null -> recurse(dir.parentFile)
+        else -> null
+      }
+    }
+
+    gradleCommand = recurse(project.projectDir) ?: globalGradle
   }
 
   private fun installVertxExtension(project: Project) {
