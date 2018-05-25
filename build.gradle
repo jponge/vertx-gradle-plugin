@@ -17,7 +17,7 @@
 plugins {
   id 'java-gradle-plugin'
   id 'com.gradle.plugin-publish' version '0.9.10'
-  id 'org.jetbrains.kotlin.jvm' version '1.2.21'
+  id 'org.jetbrains.kotlin.jvm' version '1.2.41'
   id 'com.github.ben-manes.versions' version '0.17.0'
 }
 
@@ -30,14 +30,13 @@ version = '0.0.9-SNAPSHOT'
 group = 'io.vertx'
 
 dependencies {
-  implementation 'org.jetbrains.kotlin:kotlin-stdlib'
-  implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
-  implementation 'com.github.jengelman.gradle.plugins:shadow:2.0.2'
-  implementation 'com.netflix.nebula:nebula-dependency-recommender:5.1.0'
+  implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.2.41'
+  implementation 'com.github.jengelman.gradle.plugins:shadow:2.0.4'
+  implementation 'com.netflix.nebula:nebula-dependency-recommender:5.2.0'
 
   testImplementation 'junit:junit:4.12'
-  testImplementation 'org.assertj:assertj-core:3.9.1'
-  testImplementation 'com.github.kittinunf.fuel:fuel:1.12.1'
+  testImplementation 'org.assertj:assertj-core:3.10.0'
+  testImplementation 'com.github.kittinunf.fuel:fuel:1.13.0'
 }
 
 gradlePlugin {
@@ -63,7 +62,7 @@ pluginBundle {
 }
 
 task wrapper(type: Wrapper) {
-  gradleVersion = '4.6'
+  gradleVersion = '4.7'
   distributionType = 'all'
 }
 
