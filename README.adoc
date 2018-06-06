@@ -95,7 +95,7 @@ repositories {
 
 dependencies {
   compile 'io.vertx:vertx-lang-kotlin'
-  compile 'org.jetbrains.kotlin:kotlin-stdlib-jre8'  // <1>
+  compile 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'  // <1>
 }
 
 vertx {

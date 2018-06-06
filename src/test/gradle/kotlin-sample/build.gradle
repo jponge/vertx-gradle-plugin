@@ -4,7 +4,7 @@ buildscript {
   }
   dependencies {
     classpath 'io.vertx:vertx-gradle-plugin'
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.1.4-3"
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.2.41"
   }
 }
 
@@ -18,7 +18,7 @@ repositories {
 dependencies {
   compile "io.vertx:vertx-web"
   compile "io.vertx:vertx-lang-kotlin"
-  compile "org.jetbrains.kotlin:kotlin-stdlib-jre8"
+  compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
   compile "ch.qos.logback:logback-classic:1.2.3"
 }
 
