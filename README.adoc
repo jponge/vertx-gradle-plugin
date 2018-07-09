@@ -133,7 +133,7 @@ The following configuration can be applied, and matches the `vertx run` command-
 | `io.vertx.core.Launcher`
 
 |`mainVerticle`
-|the main verticle, when using `io.vertx.core.Launcher` as `launcher`
+|the main verticle
 | `""`
 
 |`args`

@@ -151,13 +151,13 @@ class VertxPlugin : Plugin<Project> {
 
       main = if (vertxExtension.redeploy) "io.vertx.core.Launcher" else vertxExtension.launcher
 
-      if (vertxExtension.launcher == "io.vertx.core.Launcher") {
-        if (vertxExtension.mainVerticle.isBlank()) {
+      if (vertxExtension.mainVerticle.isBlank()) {
+        if (vertxExtension.launcher == "io.vertx.core.Launcher") {
           throw GradleException("Extension property vertx.mainVerticle must be specified when using io.vertx.core.Launcher as a launcher")
         }
-        args("run", vertxExtension.mainVerticle)
-      } else if (vertxExtension.redeploy) {
         args("run")
+      } else {
+        args("run", vertxExtension.mainVerticle)
       }
 
       if (vertxExtension.redeploy) {
@@ -226,4 +226,3 @@ class VertxPlugin : Plugin<Project> {
     return arrayListOf(debugger, disableEventLoopchecker, disableWorkerchecker, mark)
   }
 }
-
