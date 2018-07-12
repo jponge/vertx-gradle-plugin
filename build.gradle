@@ -26,7 +26,7 @@ repositories {
   mavenLocal()
 }
 
-version = '0.0.9-SNAPSHOT'
+version = '0.2.0-SNAPSHOT'
 group = 'io.vertx'
 
 dependencies {
