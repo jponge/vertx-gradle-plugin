@@ -72,12 +72,30 @@ class VertxPluginTest {
       assertThat(response.body).isEqualTo("Yo!")
     }
   }
+
+  @Test
+  fun `check that it builds a Docker image with Jib`() {
+    GradleRunner.create()
+      .withProjectDir(File("src/test/gradle/simple-project"))
+      .withPluginClasspath()
+      .withArguments("clean", "jibDockerBuild")
+      .build()
+    run("docker", "pull", "simple-project")
+    val inspection = run("docker", "inspect", "simple-project")
+    assertThat(inspection).containsSequence("simple-project:latest")
+    assertThat(inspection).containsSequence("\"io.vertx.core.Launcher\"")
+  }
 }
 
-private fun run(vararg command: String, block: () -> Unit) {
-  val process = ProcessBuilder(command.toList()).start()
+private fun run(vararg command: String, block: () -> Unit = {}): String {
+  val process = ProcessBuilder(command.toList())
+    .redirectOutput(ProcessBuilder.Redirect.PIPE)
+    .redirectError(ProcessBuilder.Redirect.PIPE)
+    .start()
   Thread.sleep(1000)
   block()
+  val stdout = process.inputStream.bufferedReader().readText()
   process.destroyForcibly()
   process.waitFor(30, TimeUnit.SECONDS)
+  return stdout
 }
