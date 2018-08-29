@@ -133,6 +133,7 @@ class VertxPlugin : Plugin<Project> {
       classifier = "fat"
       mergeServiceFiles { serviceFiles ->
         serviceFiles.include("META-INF/services/io.vertx.core.spi.VerticleFactory")
+        serviceFiles.include("META-INF/spring.*")
       }
       manifest { manifest ->
         manifest.attributes.put("Main-Verticle", vertxExtension.mainVerticle)
