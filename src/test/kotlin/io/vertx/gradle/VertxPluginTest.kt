@@ -16,13 +16,14 @@
 
 package io.vertx.gradle
 
+import com.mashape.unirest.http.Unirest
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.Test
 import java.io.File
 import java.util.concurrent.TimeUnit
 import java.util.jar.JarFile
-import com.mashape.unirest.http.Unirest
+import kotlin.concurrent.thread
 
 /**
  * @author [Julien Ponge](https://julien.ponge.org/)
@@ -92,10 +93,25 @@ private fun run(vararg command: String, block: () -> Unit = {}): String {
     .redirectOutput(ProcessBuilder.Redirect.PIPE)
     .redirectError(ProcessBuilder.Redirect.PIPE)
     .start()
+  var stdout = ""
+  var stopReading = false
+  val readerThread = thread(start = true) {
+    var reader = process.inputStream.bufferedReader()
+    try {
+      var line = reader.readLine()
+      while (line != null && !stopReading) {
+        stdout += line
+        line = reader.readLine()
+      }
+    } catch (e: Exception) {
+      //Nothing to do
+    }
+  }
   Thread.sleep(1000)
   block()
-  val stdout = process.inputStream.bufferedReader().readText()
   process.destroyForcibly()
   process.waitFor(30, TimeUnit.SECONDS)
+  stopReading = true
+  readerThread.join()
   return stdout
 }
