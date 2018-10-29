@@ -112,6 +112,24 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {   // <3>
 <2> This verticle can be written in Kotlin (or Java).
 <3> By default Kotlin compiles to Java 6 bytecode, so it is worth changing all compilation tasks to match Java 8 bytecode.
 
+=== Using Kotlin DSL
+
+[source,kotlin]
+----
+plugins {
+  id("io.vertx.vertx-plugin") version "x.y.z"
+}
+
+repositories {
+  jcenter()
+}
+
+vertx { // <1>
+  mainVerticle = "sample.App"
+}
+----
+<1> Extension method on `org.gradle.api.Project`.
+
 == Configuration
 
 The configuration happens through the `vertx` Gradle extension.

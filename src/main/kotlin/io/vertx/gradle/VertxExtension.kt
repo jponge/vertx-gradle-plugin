@@ -49,3 +49,9 @@ open class VertxExtension(private val project: Project) {
     return "VertxExtension(project=$project, vertxVersion='$vertxVersion', launcher='$launcher', mainVerticle='$mainVerticle', args=$args, config='$config', workDirectory='$workDirectory', jvmArgs=$jvmArgs, redeploy=$redeploy, watch=$watch, onRedeploy='$onRedeploy', redeployScanPeriod=$redeployScanPeriod, redeployGracePeriod=$redeployGracePeriod, redeployTerminationPeriod=$redeployTerminationPeriod, debugPort=$debugPort, debugSuspend=$debugSuspend)"
   }
 }
+
+/**
+ * Extension method to make easier the configuration of the plugin when used with the Gradle Kotlin DSL
+ */
+fun Project.vertx(configure: VertxExtension.() -> Unit) =
+  extensions.configure(VertxExtension::class.java, configure)
