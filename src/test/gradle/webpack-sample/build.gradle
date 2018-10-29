@@ -24,7 +24,7 @@ dependencies {
 
 vertx {
   mainVerticle = "sample.MainVerticle"
-  watch = ["src/**/*", "build.gradle", "yarn.lock"]
+  watch = ["src/**/*", "build.gradle.kts", "yarn.lock"]
   onRedeploy = ["classes", "webpack"]
 }
 

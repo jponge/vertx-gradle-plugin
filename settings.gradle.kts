@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-rootProject.name = 'vertx-gradle-plugin'
+rootProject.name = "vertx-gradle-plugin"
