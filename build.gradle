@@ -23,6 +23,11 @@ plugins {
 
 repositories {
   jcenter()
+  repositories {
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
+  }
   mavenLocal()
 }
 
@@ -35,6 +40,7 @@ dependencies {
   implementation ('com.netflix.nebula:nebula-dependency-recommender:5.2.0') {
     exclude group: 'org.jetbrains.kotlin'
   }
+  implementation 'com.google.cloud.tools.jib:com.google.cloud.tools.jib.gradle.plugin:0.9.7'
 
   testImplementation 'junit:junit:4.12'
   testImplementation 'com.mashape.unirest:unirest-java:1.4.9'

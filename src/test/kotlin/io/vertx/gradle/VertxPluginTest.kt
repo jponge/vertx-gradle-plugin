@@ -16,13 +16,14 @@
 
 package io.vertx.gradle
 
+import com.mashape.unirest.http.Unirest
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.Test
 import java.io.File
 import java.util.concurrent.TimeUnit
 import java.util.jar.JarFile
-import com.mashape.unirest.http.Unirest
+import kotlin.concurrent.thread
 
 /**
  * @author [Julien Ponge](https://julien.ponge.org/)
@@ -72,12 +73,45 @@ class VertxPluginTest {
       assertThat(response.body).isEqualTo("Yo!")
     }
   }
+
+  @Test
+  fun `check that it builds a Docker image with Jib`() {
+    GradleRunner.create()
+      .withProjectDir(File("src/test/gradle/simple-project"))
+      .withPluginClasspath()
+      .withArguments("clean", "jibDockerBuild")
+      .build()
+    run("docker", "pull", "simple-project")
+    val inspection = run("docker", "inspect", "simple-project")
+    assertThat(inspection).containsSequence("simple-project:latest")
+    assertThat(inspection).containsSequence("\"io.vertx.core.Launcher\"")
+  }
 }
 
-private fun run(vararg command: String, block: () -> Unit) {
-  val process = ProcessBuilder(command.toList()).start()
+private fun run(vararg command: String, block: () -> Unit = {}): String {
+  val process = ProcessBuilder(command.toList())
+    .redirectOutput(ProcessBuilder.Redirect.PIPE)
+    .redirectError(ProcessBuilder.Redirect.PIPE)
+    .start()
+  var stdout = ""
+  var stopReading = false
+  val readerThread = thread(start = true) {
+    var reader = process.inputStream.bufferedReader()
+    try {
+      var line = reader.readLine()
+      while (line != null && !stopReading) {
+        stdout += line
+        line = reader.readLine()
+      }
+    } catch (e: Exception) {
+      //Nothing to do
+    }
+  }
   Thread.sleep(1000)
   block()
   process.destroyForcibly()
   process.waitFor(30, TimeUnit.SECONDS)
+  stopReading = true
+  readerThread.join()
+  return stdout
 }

@@ -18,6 +18,8 @@ package io.vertx.gradle
 
 import com.github.jengelman.gradle.plugins.shadow.ShadowPlugin
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import com.google.cloud.tools.jib.gradle.JibExtension
+import com.google.cloud.tools.jib.gradle.JibPlugin
 import netflix.nebula.dependency.recommender.DependencyRecommendationsPlugin
 import netflix.nebula.dependency.recommender.provider.RecommendationProviderContainer
 import org.apache.tools.ant.taskdefs.condition.Os
@@ -57,6 +59,7 @@ class VertxPlugin : Plugin<Project> {
       addVertxCoreDependency(project)
       defineMainClassName(project)
       configureShadowPlugin(project)
+      configureJibPlugin(project)
       configureVertxRunTask(project)
       configureVertxDebugTask(project)
     }
@@ -91,6 +94,7 @@ class VertxPlugin : Plugin<Project> {
     project.pluginManager.apply(ApplicationPlugin::class.java)
     project.pluginManager.apply(ShadowPlugin::class.java)
     project.pluginManager.apply(DependencyRecommendationsPlugin::class.java)
+    project.pluginManager.apply(JibPlugin::class.java)
     logger.debug("The plugins needed by the Vert.x plugin have been applied")
   }
 
@@ -140,6 +144,27 @@ class VertxPlugin : Plugin<Project> {
       }
     }
     logger.debug("The shadow plugin has been configured")
+  }
+
+  private fun configureJibPlugin(project: Project) {
+    val jibExtension = project.extensions.getByName("jib") as JibExtension
+    val vertxExtension = project.vertxExtension()
+    val tag = if (project.version != Project.DEFAULT_VERSION) project.version else "latest"
+    jibExtension.apply {
+      from { imageConfiguration ->
+        imageConfiguration.image = "openjdk:8-jdk-alpine"
+      }
+      to { imageConfiguration ->
+        imageConfiguration.image = "${project.name}:$tag"
+      }
+      container { containerParameters ->
+        containerParameters.useCurrentTimestamp = true
+        containerParameters.jvmFlags = vertxExtension.jvmArgs
+        containerParameters.mainClass = vertxExtension.launcher
+        containerParameters.args = vertxExtension.args
+      }
+    }
+    logger.debug("The jib plugin has been configured")
   }
 
   private fun createVertxTasks(project: Project) {
