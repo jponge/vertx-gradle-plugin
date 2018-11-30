@@ -16,13 +16,13 @@
 
 package io.vertx.gradle
 
+import com.mashape.unirest.http.Unirest
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.Test
 import java.io.File
 import java.util.concurrent.TimeUnit
 import java.util.jar.JarFile
-import com.mashape.unirest.http.Unirest
 
 /**
  * @author [Julien Ponge](https://julien.ponge.org/)
@@ -51,9 +51,9 @@ class VertxPluginTest {
     val fatJarFile = File("src/test/gradle/simple-project/build/libs/simple-project-fat.jar")
     assertThat(fatJarFile).exists().isFile()
     JarFile(fatJarFile).use {
-      assertThat(it.getJarEntry("sample/App.class")).isNotNull()
-      assertThat(it.getJarEntry("io/vertx/core/Vertx.class")).isNotNull()
-      assertThat(it.getJarEntry("io/netty/channel/EventLoopGroup.class")).isNotNull()
+      assertThat(it.getJarEntry("sample/App.class")).isNotNull
+      assertThat(it.getJarEntry("io/vertx/core/Vertx.class")).isNotNull
+      assertThat(it.getJarEntry("io/netty/channel/EventLoopGroup.class")).isNotNull
     }
   }
 

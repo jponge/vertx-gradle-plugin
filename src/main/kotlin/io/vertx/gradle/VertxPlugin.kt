@@ -32,7 +32,7 @@ import org.gradle.api.plugins.JavaPluginConvention
 import org.gradle.api.tasks.JavaExec
 import org.slf4j.LoggerFactory
 import java.io.File
-import java.util.*
+import java.util.Optional
 
 /**
  * A Gradle plugin for Eclipse Vert.x projects.
@@ -87,10 +87,12 @@ class VertxPlugin : Plugin<Project> {
 
   private fun applyOtherPlugins(project: Project) {
     logger.debug("Applying the plugins needed by the Vert.x plugin")
-    project.pluginManager.apply(JavaPlugin::class.java)
-    project.pluginManager.apply(ApplicationPlugin::class.java)
-    project.pluginManager.apply(ShadowPlugin::class.java)
-    project.pluginManager.apply(DependencyRecommendationsPlugin::class.java)
+    with(project.pluginManager) {
+      apply(JavaPlugin::class.java)
+      apply(ApplicationPlugin::class.java)
+      apply(ShadowPlugin::class.java)
+      apply(DependencyRecommendationsPlugin::class.java)
+    }
     logger.debug("The plugins needed by the Vert.x plugin have been applied")
   }
 
@@ -106,7 +108,7 @@ class VertxPlugin : Plugin<Project> {
 
   private fun addVertxCoreDependency(project: Project) {
     project.dependencies.apply {
-      add("compile", "io.vertx:vertx-core")
+      add("implementation", "io.vertx:vertx-core")
     }
     logger.debug("Added vertx-core as a compile dependency")
   }
@@ -136,7 +138,7 @@ class VertxPlugin : Plugin<Project> {
         serviceFiles.include("META-INF/spring.*")
       }
       manifest { manifest ->
-        manifest.attributes.put("Main-Verticle", vertxExtension.mainVerticle)
+        manifest.attributes["Main-Verticle"] = vertxExtension.mainVerticle
       }
     }
     logger.debug("The shadow plugin has been configured")
