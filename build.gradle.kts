@@ -30,7 +30,7 @@ repositories {
   mavenLocal()
 }
 
-version = "0.3.0-SNAPSHOT"
+version = "0.3.0"
 group = "io.vertx"
 
 dependencies {
