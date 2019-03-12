@@ -20,9 +20,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
   `java-gradle-plugin`
-  kotlin("jvm") version "1.3.11"
-  id("com.github.ben-manes.versions") version "0.20.0"
-  id("com.gradle.plugin-publish") version "0.10.0"
+  kotlin("jvm") version "1.3.21"
+  id("com.github.ben-manes.versions") version "0.21.0"
+  id("com.gradle.plugin-publish") version "0.10.1"
 }
 
 repositories {
@@ -35,14 +35,14 @@ group = "io.vertx"
 
 dependencies {
   implementation(kotlin("stdlib-jdk8"))
-  implementation("com.github.jengelman.gradle.plugins:shadow:4.0.3")
-  implementation("com.netflix.nebula:nebula-dependency-recommender:7.2.2") {
+  implementation("com.github.jengelman.gradle.plugins:shadow:5.0.0")
+  implementation("com.netflix.nebula:nebula-dependency-recommender:7.5.2") {
     exclude(group = "org.jetbrains.kotlin")
   }
 
   testImplementation("junit:junit:4.12")
   testImplementation("com.mashape.unirest:unirest-java:1.4.9")
-  testImplementation("org.assertj:assertj-core:3.11.1")
+  testImplementation("org.assertj:assertj-core:3.12.1")
 }
 
 gradlePlugin {
@@ -69,7 +69,7 @@ pluginBundle {
 
 tasks {
   getByName<Wrapper>("wrapper") {
-    gradleVersion = "5.1"
+    gradleVersion = "5.2.1"
     distributionType = ALL
   }
 
