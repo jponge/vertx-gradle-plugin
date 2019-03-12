@@ -19,10 +19,16 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
  */
 
 plugins {
+  id("com.gradle.build-scan") version "2.2.1"
   `java-gradle-plugin`
   kotlin("jvm") version "1.3.21"
   id("com.github.ben-manes.versions") version "0.21.0"
   id("com.gradle.plugin-publish") version "0.10.1"
+}
+
+buildScan {
+  termsOfServiceUrl   = "https://gradle.com/terms-of-service"
+  termsOfServiceAgree = "yes"
 }
 
 repositories {
