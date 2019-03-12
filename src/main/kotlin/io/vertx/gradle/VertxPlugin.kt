@@ -132,7 +132,7 @@ class VertxPlugin : Plugin<Project> {
     val shadowJarTask = project.tasks.getByName("shadowJar") as ShadowJar
     val vertxExtension = project.vertxExtension()
     shadowJarTask.apply {
-      archiveClassifier.set("fat")
+      archiveClassifier.set("all")
       mergeServiceFiles { serviceFiles ->
         serviceFiles.include("META-INF/services/io.vertx.core.spi.VerticleFactory")
         serviceFiles.include("META-INF/spring.*")

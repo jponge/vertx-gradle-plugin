@@ -14,7 +14,7 @@ It automatically applies the following plugins:
 
 * `https://docs.gradle.org/current/userguide/java_plugin.html[java]` (and sets the source compatibility to Java 8)
 * `https://docs.gradle.org/current/userguide/application_plugin.html[application]` + `https://docs.gradle.org/current/userguide/distribution_plugin.html[distribution]` for packaging the app for the JVM
-* `https://github.com/johnrengelman/shadow[shadow]` to generate _fat Jars_ with all dependencies bundled
+* `https://github.com/johnrengelman/shadow[shadow]` to generate _uber Jars_ with all dependencies bundled
 * https://github.com/nebula-plugins/nebula-dependency-recommender-plugin[`nebula-dependency-recommender-plugin`] so that you can omit versions from elements in the https://github.com/vert-x3/vertx-stack[the Vert.x stack]
 
 The plugin automatically adds `io.vertx:vertx-core` as a `compile` dependency, so you don't need to do it.
@@ -52,7 +52,7 @@ Replace `x.y.z` with a version available on the https://plugins.gradle.org/plugi
 
 Provided `sample.App` is a Vert.x verticle, then:
 
-* `gradle shadowJar` builds an executable Jar with all dependencies: `java -jar build/libs/simple-project-fat.jar`
+* `gradle shadowJar` builds an executable Jar with all dependencies: `java -jar build/libs/simple-project-all.jar`
 * `gradle vertxRun` starts the application and automatically recompiles (`gradle classes`) and reloads the code when any file under `src/` is being added, modified or deleted.
 
 === A slightly more elaborated example
@@ -150,7 +150,7 @@ The following configuration can be applied, and matches the `vertx run` command-
 
 |`vertxVersion`
 |the Vert.x version to use
-|`"3.6.2"`
+|`"3.6.3"`
 
 |`launcher`
 |the main class name

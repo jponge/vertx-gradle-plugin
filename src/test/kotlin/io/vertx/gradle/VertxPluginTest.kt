@@ -48,7 +48,7 @@ class VertxPluginTest {
       .withArguments("clean", "build")
       .build()
 
-    val fatJarFile = File("src/test/gradle/simple-project/build/libs/simple-project-fat.jar")
+    val fatJarFile = File("src/test/gradle/simple-project/build/libs/simple-project-all.jar")
     assertThat(fatJarFile).exists().isFile()
     JarFile(fatJarFile).use {
       assertThat(it.getJarEntry("sample/App.class")).isNotNull
@@ -65,7 +65,7 @@ class VertxPluginTest {
       .withArguments("clean", "build")
       .build()
 
-    run("java", "-jar", "src/test/gradle/simple-project/build/libs/simple-project-fat.jar") {
+    run("java", "-jar", "src/test/gradle/simple-project/build/libs/simple-project-all.jar") {
       val response = Unirest.get("http://localhost:18080/").asString()
       Unirest.shutdown()
       assertThat(response.status).isEqualTo(200)
