@@ -28,7 +28,7 @@ plugins {
 
 buildScan {
   termsOfServiceUrl   = "https://gradle.com/terms-of-service"
-  termsOfServiceAgree = "yes"
+  apply(from = "gradle/build-scans.gradle")
 }
 
 repositories {
