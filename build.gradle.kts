@@ -26,9 +26,46 @@ plugins {
   id("com.gradle.plugin-publish") version "0.10.1"
 }
 
+fun str2bool(s: String?, v: String = "true"): Boolean {
+  if (v.equals(s)) {
+    return true
+  }
+  return false
+}
+
+val acceptFile = File(gradle.gradleUserHomeDir, "build-scans/vertx-gradle-plugin/gradle-scans-license-agree.txt")
+val env = System.getenv()
+val isCI = str2bool(env.get("CI")) || str2bool(env.get("TRAVIS"))
+val hasAccepted = isCI || str2bool(env.get("VERTX_GRADLE_SCANS_ACCEPT"), "yes") || acceptFile.exists() && str2bool(acceptFile.readText().trim(), "yes")
+val hasRefused = str2bool(env.get("VERTX_GRADLE_SCANS_ACCEPT"), "no") || acceptFile.exists() && str2bool(acceptFile.readText().trim(), "no")
+
 buildScan {
   termsOfServiceUrl   = "https://gradle.com/terms-of-service"
-  apply(from = "gradle/build-scans.gradle")
+  if (hasAccepted) {
+    termsOfServiceAgree = "yes"
+  } else if (!hasRefused) {
+    gradle.buildFinished {
+      println("""
+This build uses Gradle Build Scans to gather statistics, share information about
+failures, environmental issues, dependencies resolved during the build and more.
+Build scans will be published after each build, if you accept the terms of
+service, and in particular the privacy policy.
+
+Please read
+
+    https://gradle.com/terms-of-service
+    https://gradle.com/legal/privacy
+
+and then:
+
+  - set the `VERTX_GRADLE_SCANS_ACCEPT` to `yes`/`no` if you agree with/refuse the TOS
+  - or create the ${acceptFile} file with `yes`/`no` in it if you agree with/refuse
+
+And we'll not bother you again. Note that build scans are only made public if
+you share the URL at the end of the build.
+""")
+    }
+  }
 }
 
 repositories {
