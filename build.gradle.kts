@@ -27,10 +27,7 @@ plugins {
 }
 
 fun str2bool(s: String?, v: String = "true"): Boolean {
-  if (v.equals(s)) {
-    return true
-  }
-  return false
+  return v == s
 }
 
 val acceptFile = File(gradle.gradleUserHomeDir, "build-scans/vertx-gradle-plugin/gradle-scans-license-agree.txt")
