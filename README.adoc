@@ -150,7 +150,7 @@ The following configuration can be applied, and matches the `vertx run` command-
 
 |`vertxVersion`
 |the Vert.x version to use
-|`"3.6.3"`
+|`"3.7.0"`
 
 |`launcher`
 |the main class name
