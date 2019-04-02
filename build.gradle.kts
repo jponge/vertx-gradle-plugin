@@ -36,13 +36,13 @@ group = "io.vertx"
 dependencies {
   implementation(kotlin("stdlib-jdk8"))
   implementation("com.github.jengelman.gradle.plugins:shadow:5.0.0")
-  implementation("com.netflix.nebula:nebula-dependency-recommender:7.5.2") {
+  implementation("com.netflix.nebula:nebula-dependency-recommender:7.5.4") {
     exclude(group = "org.jetbrains.kotlin")
   }
 
   testImplementation("junit:junit:4.12")
   testImplementation("com.mashape.unirest:unirest-java:1.4.9")
-  testImplementation("org.assertj:assertj-core:3.12.1")
+  testImplementation("org.assertj:assertj-core:3.12.2")
 }
 
 gradlePlugin {
