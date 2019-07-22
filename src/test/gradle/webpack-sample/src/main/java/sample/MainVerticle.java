@@ -25,7 +25,7 @@ public class MainVerticle extends AbstractVerticle {
         .put("value", new Date().toString()).encode()));
 
     vertx.createHttpServer()
-      .requestHandler(router::accept)
+      .requestHandler(router)
       .listen(8080);
   }
 }
