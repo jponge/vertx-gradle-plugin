@@ -76,7 +76,7 @@ dependencies {
 
 vertx {
   mainVerticle = "sample.App"
-  vertxVersion = "3.7.1" // <3>
+  vertxVersion = "3.8.0" // <3>
 }
 ----
 <1> Part of the Vert.x stack, so the version can be omitted.
@@ -150,7 +150,7 @@ The following configuration can be applied, and matches the `vertx run` command-
 
 |`vertxVersion`
 |the Vert.x version to use
-|`"3.7.1"`
+|`"3.8.0"`
 
 |`launcher`
 |the main class name
