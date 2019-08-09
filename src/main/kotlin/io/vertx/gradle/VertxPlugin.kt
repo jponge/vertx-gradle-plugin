@@ -22,7 +22,6 @@ import netflix.nebula.dependency.recommender.DependencyRecommendationsPlugin
 import netflix.nebula.dependency.recommender.provider.RecommendationProviderContainer
 import org.apache.tools.ant.taskdefs.condition.Os
 import org.gradle.api.GradleException
-import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.ApplicationPlugin
@@ -49,7 +48,6 @@ class VertxPlugin : Plugin<Project> {
     findGradleCommand(project)
     installVertxExtension(project)
     applyOtherPlugins(project)
-    defineJavaSourceCompatibility(project)
     createVertxTasks(project)
     project.afterEvaluate {
       logger.debug("Vert.x plugin configuration: ${project.vertxExtension()}")
@@ -111,14 +109,6 @@ class VertxPlugin : Plugin<Project> {
       add("implementation", "io.vertx:vertx-core")
     }
     logger.debug("Added vertx-core as a compile dependency")
-  }
-
-  private fun defineJavaSourceCompatibility(project: Project) {
-    val javaConvention = project.convention.getPlugin(JavaPluginConvention::class.java)
-    val javaVersion = JavaVersion.VERSION_1_8
-    javaConvention.sourceCompatibility = javaVersion
-    javaConvention.targetCompatibility = javaVersion
-    logger.debug("The Vert.x plugin has set Java compatibility to $javaVersion")
   }
 
   private fun defineMainClassName(project: Project) {
