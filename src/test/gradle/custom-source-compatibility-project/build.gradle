@@ -1,0 +1,20 @@
+buildscript {
+  repositories {
+    jcenter()
+  }
+  dependencies {
+    classpath 'io.vertx:vertx-gradle-plugin'
+  }
+}
+
+apply plugin: 'io.vertx.vertx-plugin'
+
+repositories {
+  jcenter()
+}
+
+vertx {
+  mainVerticle = 'sample.App'
+}
+
+sourceCompatibility = JavaVersion.VERSION_11

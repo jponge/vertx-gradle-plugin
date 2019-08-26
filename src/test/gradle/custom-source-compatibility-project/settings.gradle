@@ -1,0 +1,7 @@
+rootProject.name = 'custom-source-compatibility-project'
+
+includeBuild("../../../../") {
+  dependencySubstitution {
+    substitute module("io.vertx:vertx-gradle-plugin") with project(":")
+  }
+}
