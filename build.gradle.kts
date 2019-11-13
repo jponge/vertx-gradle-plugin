@@ -69,7 +69,7 @@ pluginBundle {
 
 tasks {
   getByName<Wrapper>("wrapper") {
-    gradleVersion = "5.6.2"
+    gradleVersion = "6.0"
     distributionType = ALL
   }
 
