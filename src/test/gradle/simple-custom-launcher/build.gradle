@@ -1,0 +1,13 @@
+plugins {
+  id 'io.vertx.vertx-plugin'
+}
+
+repositories {
+  jcenter()
+}
+
+vertx {
+  mainVerticle = 'sample.App'
+  launcher = 'sample.AppLauncher'
+  redeploy = false
+}

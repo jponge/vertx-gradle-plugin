@@ -19,10 +19,12 @@ package io.vertx.gradle
 import com.mashape.unirest.http.Unirest
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.GradleRunner
+import org.gradle.testkit.runner.TaskOutcome
 import org.junit.Test
-import java.io.File
+import java.io.*
 import java.util.concurrent.TimeUnit
 import java.util.jar.JarFile
+
 
 /**
  * @author [Julien Ponge](https://julien.ponge.org/)
@@ -71,6 +73,40 @@ class VertxPluginTest {
       assertThat(response.status).isEqualTo(200)
       assertThat(response.body).isEqualTo("Yo!")
     }
+  }
+
+  @Test
+  fun `check that vertxRun task runs with custom launcher`() {
+    val result = GradleRunner
+      .create()
+      .withProjectDir(File("src/test/gradle/simple-custom-launcher"))
+      .withPluginClasspath()
+      .withArguments("clean", "vertxRun")
+      .build()
+
+    assertThat(result.task(":vertxRun")).isNotNull
+    assertThat(result.task(":vertxRun")!!.outcome).isSameAs(TaskOutcome.SUCCESS)
+
+    assertThat(result.output)
+      .contains("Started with custom launcher.")
+      .contains("App stopped.")
+  }
+
+  @Test
+  fun `check that vertxDebug task runs with custom launcher`() {
+    val result = GradleRunner
+      .create()
+      .withProjectDir(File("src/test/gradle/simple-custom-launcher"))
+      .withPluginClasspath()
+      .withArguments("clean", "vertxDebug")
+      .build()
+
+    assertThat(result.task(":vertxDebug")).isNotNull
+    assertThat(result.task(":vertxDebug")!!.outcome).isSameAs(TaskOutcome.SUCCESS)
+
+    assertThat(result.output)
+      .contains("Started with custom launcher.")
+      .contains("App stopped.")
   }
 }
 
