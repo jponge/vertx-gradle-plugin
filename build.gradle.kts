@@ -22,7 +22,7 @@ plugins {
   `java-gradle-plugin`
   kotlin("jvm") version "1.3.61"
   id("com.github.ben-manes.versions") version "0.28.0"
-  id("com.gradle.plugin-publish") version "0.10.1"
+  id("com.gradle.plugin-publish") version "0.11.0"
 }
 
 repositories {
@@ -30,7 +30,7 @@ repositories {
   mavenLocal()
 }
 
-version = "1.0.3-SNAPSHOT"
+version = "1.0.3"
 group = "io.vertx"
 
 dependencies {
