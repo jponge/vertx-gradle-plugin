@@ -20,9 +20,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
   `java-gradle-plugin`
-  kotlin("jvm") version "1.3.61"
+  kotlin("jvm") version "1.3.72"
   id("com.github.ben-manes.versions") version "0.28.0"
-  id("com.gradle.plugin-publish") version "0.11.0"
+  id("com.gradle.plugin-publish") version "0.12.0"
 }
 
 repositories {
@@ -40,9 +40,9 @@ dependencies {
     exclude(group = "org.jetbrains.kotlin")
   }
 
-  testImplementation("junit:junit:4.12")
+  testImplementation("junit:junit:4.13")
   testImplementation("com.mashape.unirest:unirest-java:1.4.9")
-  testImplementation("org.assertj:assertj-core:3.12.2")
+  testImplementation("org.assertj:assertj-core:3.16.1")
 }
 
 gradlePlugin {
@@ -69,7 +69,7 @@ pluginBundle {
 
 tasks {
   getByName<Wrapper>("wrapper") {
-    gradleVersion = "6.2.1"
+    gradleVersion = "6.5"
     distributionType = ALL
   }
 
