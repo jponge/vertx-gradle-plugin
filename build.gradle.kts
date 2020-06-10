@@ -36,9 +36,6 @@ group = "io.vertx"
 dependencies {
   implementation(kotlin("stdlib-jdk8"))
   implementation("com.github.jengelman.gradle.plugins:shadow:5.2.0")
-  implementation("com.netflix.nebula:nebula-dependency-recommender:9.0.2") {
-    exclude(group = "org.jetbrains.kotlin")
-  }
 
   testImplementation("junit:junit:4.13")
   testImplementation("com.mashape.unirest:unirest-java:1.4.9")

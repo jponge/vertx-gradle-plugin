@@ -18,20 +18,15 @@ package io.vertx.gradle
 
 import com.github.jengelman.gradle.plugins.shadow.ShadowPlugin
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import netflix.nebula.dependency.recommender.DependencyRecommendationsPlugin
-import netflix.nebula.dependency.recommender.provider.RecommendationProviderContainer
 import org.apache.tools.ant.taskdefs.condition.Os
 import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.plugins.ApplicationPlugin
-import org.gradle.api.plugins.ApplicationPluginConvention
-import org.gradle.api.plugins.JavaPlugin
-import org.gradle.api.plugins.JavaPluginConvention
+import org.gradle.api.plugins.*
 import org.gradle.api.tasks.JavaExec
 import org.slf4j.LoggerFactory
 import java.io.File
-import java.util.Optional
+import java.util.*
 
 /**
  * A Gradle plugin for Eclipse Vert.x projects.
@@ -51,7 +46,7 @@ class VertxPlugin : Plugin<Project> {
     createVertxTasks(project)
     project.afterEvaluate {
       logger.debug("Vert.x plugin configuration: ${project.vertxExtension()}")
-      configureDependencyRecommendationsPlugin(project)
+      configureVertxVersion(project)
       addVertxCoreDependency(project)
       defineMainClassName(project)
       configureShadowPlugin(project)
@@ -89,18 +84,16 @@ class VertxPlugin : Plugin<Project> {
       apply(JavaPlugin::class.java)
       apply(ApplicationPlugin::class.java)
       apply(ShadowPlugin::class.java)
-      apply(DependencyRecommendationsPlugin::class.java)
     }
     logger.debug("The plugins needed by the Vert.x plugin have been applied")
   }
 
-  private fun configureDependencyRecommendationsPlugin(project: Project) {
-    val recommendations = project.extensions.getByName("dependencyRecommendations") as RecommendationProviderContainer
+  private fun configureVertxVersion(project: Project) {
     val vertxVersion = project.vertxExtension().vertxVersion
-    recommendations.apply {
-      mavenBom(mapOf("module" to "io.vertx:vertx-stack-depchain:$vertxVersion"))
-    }
     project.extensions.extraProperties["stack.version"] = vertxVersion
+    project.dependencies.apply {
+      add("implementation", platform("io.vertx:vertx-stack-depchain:$vertxVersion"))
+    }
     logger.debug("Recommending Vert.x version $vertxVersion")
   }
 
