@@ -2,6 +2,7 @@
 
 An _opinionated_ Gradle plugin for Vert.x projects.
 
+image:https://github.com/jponge/vertx-gradle-plugin/workflows/Java%20CI%20with%20Gradle/badge.svg[Java CI with Gradle]
 image:https://img.shields.io/github/tag/jponge/vertx-gradle-plugin.svg[tag, link=https://plugins.gradle.org/plugin/io.vertx.vertx-plugin]
 image:https://img.shields.io/github/license/jponge/vertx-gradle-plugin.svg[license, link=https://github.com/jponge/vertx-gradle-plugin/blob/master/LICENSE]
 image:https://img.shields.io/maven-metadata/v/https/plugins.gradle.org/m2/io/vertx/vertx-plugin/io.vertx.vertx-plugin.gradle.plugin/maven-metadata.xml.svg?label=gradlePluginPortal["Maven Central",link="https://plugins.gradle.org/plugin/io.vertx.vertx-plugin"]
