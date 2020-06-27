@@ -16,7 +16,8 @@ It automatically applies the following plugins:
 * `https://docs.gradle.org/current/userguide/java_plugin.html[java]`
 * `https://docs.gradle.org/current/userguide/application_plugin.html[application]` + `https://docs.gradle.org/current/userguide/distribution_plugin.html[distribution]` for packaging the app for the JVM
 * `https://github.com/johnrengelman/shadow[shadow]` to generate _uber Jars_ with all dependencies bundled
-* https://github.com/nebula-plugins/nebula-dependency-recommender-plugin[`nebula-dependency-recommender-plugin`] so that you can omit versions from elements in the https://github.com/vert-x3/vertx-stack[the Vert.x stack]
+
+You can omit versions from elements in the https://github.com/vert-x3/vertx-stack[the Vert.x stack as the plugin references the corresponding Maven BOM.
 
 NOTE: From version `0.9.0` the plugin no longer sets the `sourceCompatibility` to Java 8. You can set it manually like in other `https://docs.gradle.org/current/userguide/building_java_projects.html#introduction[Java projects]`.
 
