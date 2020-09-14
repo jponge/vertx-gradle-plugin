@@ -1,5 +1,4 @@
 import org.gradle.api.tasks.wrapper.Wrapper.DistributionType.ALL
-import org.gradle.internal.impldep.org.junit.experimental.categories.Categories.CategoryFilter.exclude
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 /*
@@ -20,8 +19,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
   `java-gradle-plugin`
-  kotlin("jvm") version "1.3.72"
-  id("com.github.ben-manes.versions") version "0.28.0"
+  kotlin("jvm") version "1.4.0"
+  id("com.github.ben-manes.versions") version "0.33.0"
   id("com.gradle.plugin-publish") version "0.12.0"
 }
 
@@ -39,7 +38,7 @@ dependencies {
 
   testImplementation("junit:junit:4.13")
   testImplementation("com.mashape.unirest:unirest-java:1.4.9")
-  testImplementation("org.assertj:assertj-core:3.16.1")
+  testImplementation("org.assertj:assertj-core:3.17.1")
 }
 
 gradlePlugin {
@@ -66,7 +65,7 @@ pluginBundle {
 
 tasks {
   getByName<Wrapper>("wrapper") {
-    gradleVersion = "6.5"
+    gradleVersion = "6.6.1"
     distributionType = ALL
   }
 
