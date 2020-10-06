@@ -34,7 +34,7 @@ group = "io.vertx"
 
 dependencies {
   implementation(kotlin("stdlib-jdk8"))
-  implementation("com.github.jengelman.gradle.plugins:shadow:6.0.0")
+  implementation("com.github.jengelman.gradle.plugins:shadow:6.1.0")
 
   testImplementation("junit:junit:4.13")
   testImplementation("com.mashape.unirest:unirest-java:1.4.9")
