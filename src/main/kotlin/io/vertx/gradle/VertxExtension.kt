@@ -25,7 +25,7 @@ import org.gradle.api.Project
  */
 open class VertxExtension(private val project: Project) {
 
-  var vertxVersion = "3.9.2"
+  var vertxVersion = "3.9.3"
 
   var launcher = "io.vertx.core.Launcher"
   var mainVerticle = ""
