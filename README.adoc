@@ -154,7 +154,7 @@ The following configuration can be applied, and matches the `vertx run` command-
 
 |`vertxVersion`
 |the Vert.x version to use
-|`"3.9.3"`
+|`"4.0.0"`
 
 |`launcher`
 |the main class name
