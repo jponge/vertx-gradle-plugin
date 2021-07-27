@@ -19,7 +19,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
   `java-gradle-plugin`
-  kotlin("jvm") version "1.5.21"
+  kotlin("jvm") version "1.3.72"
   id("com.github.ben-manes.versions") version "0.39.0"
   id("com.gradle.plugin-publish") version "0.15.0"
 }
