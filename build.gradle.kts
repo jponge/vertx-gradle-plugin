@@ -19,9 +19,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
   `java-gradle-plugin`
-  kotlin("jvm") version "1.4.0"
-  id("com.github.ben-manes.versions") version "0.33.0"
-  id("com.gradle.plugin-publish") version "0.12.0"
+  kotlin("jvm") version "1.5.21"
+  id("com.github.ben-manes.versions") version "0.39.0"
+  id("com.gradle.plugin-publish") version "0.15.0"
 }
 
 repositories {
@@ -36,9 +36,9 @@ dependencies {
   implementation(kotlin("stdlib-jdk8"))
   implementation("com.github.jengelman.gradle.plugins:shadow:6.1.0")
 
-  testImplementation("junit:junit:4.13")
+  testImplementation("junit:junit:4.13.2")
   testImplementation("com.mashape.unirest:unirest-java:1.4.9")
-  testImplementation("org.assertj:assertj-core:3.17.1")
+  testImplementation("org.assertj:assertj-core:3.20.2")
 }
 
 gradlePlugin {
