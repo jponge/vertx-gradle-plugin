@@ -146,7 +146,7 @@ class VertxPlugin : Plugin<Project> {
       jvmArgs(vertxExtension.jvmArgs)
       classpath(mainSourceSet.runtimeClasspath)
 
-      main = if (vertxExtension.redeploy) "io.vertx.core.Launcher" else vertxExtension.launcher
+      mainClass.set(if (vertxExtension.redeploy) "io.vertx.core.Launcher" else vertxExtension.launcher)
 
       if (vertxExtension.mainVerticle.isBlank()) {
         if (vertxExtension.launcher == "io.vertx.core.Launcher") {
@@ -194,7 +194,7 @@ class VertxPlugin : Plugin<Project> {
       jvmArgs(computeDebugOptions(project))
       classpath(mainSourceSet.runtimeClasspath)
 
-      main = vertxExtension.launcher
+      mainClass.set(vertxExtension.launcher)
 
       if (vertxExtension.mainVerticle.isBlank()) {
         if (vertxExtension.launcher == "io.vertx.core.Launcher") {
