@@ -25,7 +25,8 @@ plugins {
 }
 
 repositories {
-  jcenter()
+  mavenCentral()
+  gradlePluginPortal()
   mavenLocal()
 }
 
@@ -34,7 +35,7 @@ group = "io.vertx"
 
 dependencies {
   implementation(kotlin("stdlib-jdk8"))
-  implementation("com.github.jengelman.gradle.plugins:shadow:6.1.0")
+  implementation("gradle.plugin.com.github.jengelman.gradle.plugins:shadow:7.0.0")
 
   testImplementation("junit:junit:4.13.2")
   testImplementation("com.mashape.unirest:unirest-java:1.4.9")
