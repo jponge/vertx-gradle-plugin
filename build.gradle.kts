@@ -19,7 +19,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
   `java-gradle-plugin`
-  kotlin("jvm") version "1.3.72"
+  kotlin("jvm") version "1.4.31"
   id("com.github.ben-manes.versions") version "0.39.0"
   id("com.gradle.plugin-publish") version "0.15.0"
 }
@@ -65,7 +65,7 @@ pluginBundle {
 
 tasks {
   getByName<Wrapper>("wrapper") {
-    gradleVersion = "6.6.1"
+    gradleVersion = "7.0"
     distributionType = ALL
   }
 
