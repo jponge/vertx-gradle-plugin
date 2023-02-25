@@ -19,13 +19,14 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
   `java-gradle-plugin`
-  kotlin("jvm") version "1.3.72"
+  kotlin("jvm") version "1.4.31"
   id("com.github.ben-manes.versions") version "0.39.0"
   id("com.gradle.plugin-publish") version "0.15.0"
 }
 
 repositories {
-  jcenter()
+  mavenCentral()
+  gradlePluginPortal()
   mavenLocal()
 }
 
@@ -34,7 +35,7 @@ group = "io.vertx"
 
 dependencies {
   implementation(kotlin("stdlib-jdk8"))
-  implementation("com.github.jengelman.gradle.plugins:shadow:6.1.0")
+  implementation("gradle.plugin.com.github.johnrengelman:shadow:7.1.0")
 
   testImplementation("junit:junit:4.13.2")
   testImplementation("com.mashape.unirest:unirest-java:1.4.9")
@@ -65,7 +66,7 @@ pluginBundle {
 
 tasks {
   getByName<Wrapper>("wrapper") {
-    gradleVersion = "6.6.1"
+    gradleVersion = "7.0"
     distributionType = ALL
   }
 
